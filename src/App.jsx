@@ -35,6 +35,7 @@ const MemberPortfolio = lazy(() => import('./pages/MemberPortfolio.jsx'));
 const PhotoUploadPage = lazy(() => import('./pages/PhotoUploadPage.jsx'));
 const LoginPage = lazy(() => import('./pages/LoginPage.jsx'));
 const StorePage = lazy(() => import('./pages/StorePage.jsx'));
+const HalloweenEventPage = lazy(() => import('./pages/HalloweenEventPage.jsx'));
 
 function App() {
   const location = useLocation();
@@ -59,6 +60,7 @@ function App() {
               <Route path="/join" element={<JoinPage />} />
               <Route path="/login" element={<AdminLoginPage />} />
               <Route path="/aaravam" element={<Aaravam />} />
+              <Route path="/halloween-contest" element={<HalloweenEventPage />} />
               <Route path="/event/:eventId" element={<EventPage />} />
               <Route path="*" element={<NotFoundPage />} /> 
               {/*<Route path="/teampage" element={<Teampage />} />
