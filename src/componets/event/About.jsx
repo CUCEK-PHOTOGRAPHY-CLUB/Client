@@ -39,7 +39,7 @@ const About = ({ aboutData }) => {
               <div className="flip-card-inner">
                 <div className="flip-card-front card-bg-image p-6 flex flex-col items-center justify-end text-center border-2 border-orange-500/30 group-hover:shadow-2xl group-hover:shadow-red-500/40 transition-shadow" style={{ backgroundImage: `url('${card.frontImageUrl}')` }}>
                   <h3 className="font-creepster text-3xl text-yellow-400 mb-2">{card.title}</h3>
-                  <p>Click to flip for details</p>
+                  <p className="text-white font-bold" style={{ textShadow: '2px 2px 4px rgba(0,0,0,1), -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000' }}>Click to flip for details</p>
                 </div>
                 <div className="flip-card-back bg-gray-900 p-6 flex flex-col justify-center text-center border-2 border-orange-500 rounded-lg">
                   <h3 className="font-creepster text-3xl text-yellow-400 mb-2">{card.title}</h3>
