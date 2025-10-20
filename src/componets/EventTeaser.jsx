@@ -12,9 +12,6 @@ const EventTeaser = () => {
         <h2 className="text-6xl md:text-8xl lg:text-9xl font-bold mb-6 text-red-600 animate-pulse" style={{ fontFamily: "'Creepster', cursive", textShadow: '4px 4px 8px rgba(0,0,0,1), 0 0 15px #dc2626, 0 0 30px #dc2626' }}>
           Halloween Contest
         </h2>
-        <p className="text-xl md:text-3xl mb-12 text-gray-100 font-bold tracking-wide" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.9)' }}>
-          What if Stranger Things... happened at CUCEK?
-        </p>
         <Link
           to="/halloween-contest"
           className="inline-block bg-gradient-to-r from-gray-900 to-black hover:from-red-900 hover:to-black text-white font-bold py-4 px-12 rounded-full text-xl md:text-2xl transition-all duration-500 ease-in-out transform hover:scale-110 hover:shadow-2xl border-4 border-red-600 shadow-lg"
