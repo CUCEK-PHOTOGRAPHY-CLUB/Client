@@ -33,10 +33,9 @@ const Hero = ({ heroData }) => {
   return (
     <section 
       id="home" 
-      className="h-screen w-full flex flex-col justify-center items-center text-center p-4 relative bg-cover bg-center"
+      className="h-screen w-full flex flex-col justify-center items-center text-center p-4 pt-32 relative bg-cover bg-center"
       style={{ backgroundImage: `url('${heroData.backgroundImageUrl}')` }}
     >
-      <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-purple)] via-[rgba(26,11,46,0.7)] to-[rgba(26,11,46,0.5)]"></div>
       <div className="relative z-10">
         <p className="text-lg md:text-2xl mb-2 text-gray-300">CUCEK Photography Club Presents</p>
         <h1 className="font-creepster text-5xl sm:text-7xl md:text-8xl lg:text-9xl text-white uppercase" style={{ textShadow: '0 0 15px var(--glow-orange)' }}>

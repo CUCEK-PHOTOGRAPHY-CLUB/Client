@@ -24,12 +24,12 @@ const HalloweenEventPage = () => {
         // This is the mock data from your preview, which powers the components.
         const data = {
           logoUrl: '/logo/whitelogo.svg', // Placeholder, adjust if needed
-          hero: { backgroundImageUrl: 'https://images.unsplash.com/photo-1572521165321-4ff6715d1b24?q=80&w=2070&auto=format&fit=crop' },
+          hero: { backgroundImageUrl: 'https://images.unsplash.com/photo-1508361001413-7a9dca21d08a?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=2070' },
           about: {
             cards: [
-              { title: "Horror Icons Reimagined", frontImageUrl: "https://images.unsplash.com/photo-1542289637-937001634409?q=80&w=1974&auto=format&fit=crop", description: "Choose a character from your favorite horror movie or series. Your goal is to recreate them with chilling accuracy through a cinematic photoshoot." },
-              { title: "The Perfect Scene", frontImageUrl: "https://images.unsplash.com/photo-1598360886538-745906334e33?q=80&w=1974&auto=format&fit=crop", description: "The background tells its own story. Design a spine-chilling set that complements your character and enhances the cinematic quality of your photo." },
-              { title: "Behind The Screams", frontImageUrl: "https://images.unsplash.com/photo-1505692009949-c96853a4b6a9?q=80&w=2070&auto=format&fit=crop", description: "Document your creative process! Submit a BTS video showcasing the making of your photoshoot, from costume and makeup to the final shot." }
+              { title: "Horror Icons Reimagined", frontImageUrl: "https://images.unsplash.com/photo-1598983870677-01e066a0b901?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=2070", description: "Choose a character from your favorite horror movie or series. Your goal is to recreate them with chilling accuracy through a cinematic photoshoot." },
+              { title: "The Perfect Scene", frontImageUrl: "https://images.unsplash.com/photo-1532767153582-b1a0e5145009?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1974", description: "The background tells its own story. Design a spine-chilling set that complements your character and enhances the cinematic quality of your photo." },
+              { title: "Behind The Screams", frontImageUrl: "https://images.unsplash.com/photo-1603516863860-7d5c93a83fe8?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=2070", description: "Document your creative process! Submit a BTS video showcasing the making of your photoshoot, from costume and makeup to the final shot." }
             ]
           },
           pastGlories: {

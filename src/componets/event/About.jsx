@@ -5,9 +5,13 @@ const About = ({ aboutData }) => {
   const handleCardFlip = (e) => e.currentTarget.closest('.flip-card').classList.toggle('flipped');
 
   return (
-    <section id="about" className="py-20 px-4">
-      <div className="container mx-auto">
-        <h2 className="text-center font-creepster text-5xl md:text-7xl mb-12 text-white" style={{ textShadow: '0 0 10px var(--glow-orange)' }}>Contest Highlights</h2>
+    <section 
+      id="about" 
+      className="py-20 px-4 relative bg-cover bg-center"
+      style={{ backgroundImage: `url('https://images.unsplash.com/photo-1572521165321-4ff6715d1b24?q=80&w=2070&auto=format&fit=crop')` }}
+    >
+      <div className="container mx-auto relative z-10">
+        <h2 className="text-center font-creepster text-5xl md:text-7xl mb-12 text-white" style={{ textShadow: '0 0 10px #ff6450' }}>Contest Highlights</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {aboutData.cards.map((card, index) => (
             <div key={index} className="flip-card h-96 cursor-pointer group" onClick={handleCardFlip}>
@@ -37,7 +41,7 @@ const About = ({ aboutData }) => {
                   <h3 className="font-creepster text-3xl text-yellow-400 mb-2">{card.title}</h3>
                   <p>Click to flip for details</p>
                 </div>
-                <div className="flip-card-back bg-gray-900 p-6 flex flex-col justify-center text-center border-2 border-[var(--glow-orange)] rounded-lg">
+                <div className="flip-card-back bg-gray-900 p-6 flex flex-col justify-center text-center border-2 border-orange-500 rounded-lg">
                   <h3 className="font-creepster text-3xl text-yellow-400 mb-2">{card.title}</h3>
                   <blockquote className="text-gray-300 italic">"{card.description}"</blockquote>
                 </div>
