@@ -60,9 +60,10 @@ const Hero = ({ heroData }) => {
           href="https://forms.gle/2LoAfq7o2BM17pTY8"
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-10 inline-block bg-[var(--glow-orange)] text-white font-bold font-special-elite py-3 px-8 rounded-full text-xl uppercase tracking-widest transition-all duration-300 border-2 border-white/50 shadow-lg shadow-[var(--glow-orange)]/30 hover:bg-[var(--glow-yellow)] hover:shadow-2xl hover:shadow-[var(--glow-yellow)]/50 hover:scale-105"
+          className="mt-10 inline-block bg-gradient-to-r from-gray-900 to-black hover:from-red-900 hover:to-black text-white font-bold py-4 px-12 rounded-full text-xl md:text-2xl transition-all duration-500 ease-in-out transform hover:scale-110 hover:shadow-2xl border-4 border-red-600 shadow-lg"
+          style={{ fontFamily: "'Creepster', cursive", textShadow: '2px 2px 4px rgba(0,0,0,0.9)', boxShadow: '0 0 30px rgba(220, 38, 38, 0.4)' }}
         >
-          Register Now
+          🎃 Register Now 🎃
         </a>
       </div>
     </section>
