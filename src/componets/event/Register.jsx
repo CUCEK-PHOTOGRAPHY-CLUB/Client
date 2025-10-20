@@ -11,7 +11,10 @@ const Register = () => {
         <h2 className="font-creepster text-5xl md:text-7xl mb-8 text-white" style={{ textShadow: '0 0 15px rgba(255,100,80,0.7)' }}>
           Register for the Contest
         </h2>
-        <p className="mt-2 text-lg text-gray-300">
+        <p className="mt-2 text-lg text-white font-medium" style={{ 
+          textShadow: '2px 2px 4px rgba(0,0,0,0.9), -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000',
+          WebkitTextStroke: '1px rgba(0,0,0,0.5)'
+        }}>
           Ready to bring your nightmares to life? Click the button below to register your team for the Halloween CoZplay Contest!
         </p>
         <a

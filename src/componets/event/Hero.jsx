@@ -41,7 +41,10 @@ const Hero = ({ heroData }) => {
         <h1 className="font-creepster text-5xl sm:text-7xl md:text-8xl lg:text-9xl text-white uppercase" style={{ textShadow: '0 0 15px var(--glow-orange)' }}>
            Halloween CoZplay Contest
         </h1>
-        <p className="max-w-2xl mx-auto mt-4 text-md md:text-lg text-gray-200">
+        <p className="max-w-2xl mx-auto mt-4 text-md md:text-lg text-white font-medium" style={{ 
+          textShadow: '2px 2px 4px rgba(0,0,0,0.9), -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000',
+          WebkitTextStroke: '0.5px rgba(0,0,0,0.5)'
+        }}>
           Step into the dark side. Recreate your favorite horror characters in a cinematic photoshoot and bring your nightmares to life.
         </p>
         <div className="text-2xl md:text-4xl mt-8 font-creepster text-white space-x-2 md:space-x-6 tracking-wider">
