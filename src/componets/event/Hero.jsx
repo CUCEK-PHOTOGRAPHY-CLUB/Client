@@ -5,7 +5,7 @@ const Hero = ({ heroData }) => {
 
   useEffect(() => {
     // Set a fixed target date for the countdown
-    const countdownDate = new Date("October 22, 2025 23:59:59").getTime();
+    const countdownDate = new Date("October 30, 2025 23:59:59").getTime();
 
     const interval = setInterval(() => {
       const now = new Date().getTime();
