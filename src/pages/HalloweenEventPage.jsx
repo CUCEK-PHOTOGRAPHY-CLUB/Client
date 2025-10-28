@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useLayoutEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 // Import all the section components
 import Preloader from '../componets/event/Preloader.jsx';
 import Hero from '../componets/event/Hero.jsx';
+// No need to import a separate Sponsorship component
 import About from '../componets/event/About.jsx';
 import PastGlories from '../componets/event/PastGlories.jsx';
 import Register from '../componets/event/Register.jsx';
@@ -18,12 +19,12 @@ const HalloweenEventPage = () => {
     const fetchEventData = async () => {
       setIsLoading(true);
       try {
-        // Simulate network delay to show preloader
         await new Promise(resolve => setTimeout(resolve, 1000));
 
-        // This is the mock data from your preview, which powers the components.
         const data = {
-          logoUrl: '/logo/whitelogo.svg', // Placeholder, adjust if needed
+          logoUrl: '/logo/whitelogo.svg',
+          // 1. ADD THE SPONSORSHIP IMAGE URL TO YOUR DATA
+          sponsorshipImageUrl: 'https://i.postimg.cc/xTdSBWwF/sponsorship.png',
           hero: { backgroundImageUrl: 'https://images.unsplash.com/photo-1508361001413-7a9dca21d08a?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=2070' },
           about: {
             cards: [
@@ -33,7 +34,7 @@ const HalloweenEventPage = () => {
             ]
           },
           pastGlories: {
-            images: [
+             images: [
                 { src: 'https://placehold.co/300x400/1A0B2E/FFFFFF?text=Glory+1', style: { width: '25%', top: '5%', left: '5%', transform: 'rotate(-8deg)', zIndex: 1 } },
                 { src: 'https://placehold.co/300x400/1A0B2E/FFFFFF?text=Glory+2', style: { width: '20%', top: '20%', left: '28%', transform: 'rotate(5deg)', zIndex: 3 } },
                 { src: 'https://placehold.co/300x400/1A0B2E/FFFFFF?text=Glory+3', style: { width: '28%', top: '8%', left: '50%', transform: 'rotate(10deg)', zIndex: 2 } },
@@ -58,17 +59,15 @@ const HalloweenEventPage = () => {
     fetchEventData();
   }, []);
 
-  // This effect controls how long the preloader is visible for a smooth transition
   useEffect(() => {
     if (!isLoading) {
-      const timer = setTimeout(() => setIsLoaded(true), 200); // Reduced delay from 1500ms to 200ms
+      const timer = setTimeout(() => setIsLoaded(true), 200);
       return () => clearTimeout(timer);
     }
   }, [isLoading]);
 
   return (
     <div className="font-special-elite halloween-theme">
-      {/* This style block ensures the custom fonts are correctly applied to the Tailwind classes */}
       <style>{`
         .font-creepster {
           font-family: "Creepster", cursive;
@@ -81,6 +80,20 @@ const HalloweenEventPage = () => {
       {!isLoading && eventData && (
         <main>
           <Hero heroData={eventData.hero} />
+
+          {/* 2. ADD THE SPONSORSHIP POSTER SECTION DIRECTLY HERE */}
+          <section className="bg-[#0e0e0e] py-12 sm:py-16 lg:py-20">
+            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+              <div className="flex justify-center">
+                <img
+                  src={eventData.sponsorshipImageUrl}
+                  alt="Halloween Cozplay Event Sponsor Poster"
+                  className="w-full max-w-2xl rounded-lg object-contain shadow-[0_0_5px_#fff,0_0_10px_#fff,0_0_15px_#ff0000,0_0_20px_#ff0000,0_0_25px_#ff0000,0_0_30px_#ff0000,0_0_35px_#ff0000] transition-all duration-300 hover:shadow-[0_0_10px_#fff,0_0_20px_#fff,0_0_30px_#ff0000,0_0_40px_#ff0000,0_0_50px_#ff0000,0_0_60px_#ff0000,0_0_70px_#ff0000]"
+                />
+              </div>
+            </div>
+          </section>
+
           <About aboutData={eventData.about} />
           <PastGlories pastGloriesData={eventData.pastGlories} />
           <Register />
@@ -88,7 +101,6 @@ const HalloweenEventPage = () => {
           <Footer logoUrl={eventData.logoUrl} />
         </main>
       )}
-      {/* Fallback loading text if something goes wrong */}
       {isLoading && !isLoaded && (
          <div className="h-screen flex justify-center items-center"><p>Loading Content...</p></div>
       )}
