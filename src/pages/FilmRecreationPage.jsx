@@ -227,13 +227,13 @@ const FilmRecreationPage = () => {
                 >
                     <h1 className="text-5xl md:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-neutral-200 via-neutral-400 to-neutral-200 mb-6 tracking-tighter">
                         Film Scene Recreation
-                        <span className="block text-3xl md:text-5xl text-neutral-600 mt-2">2.0</span>
+                        <span className="block text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-neutral-200 via-neutral-400 to-neutral-200 mb-6 tracking-tighter">2.0</span>
                     </h1>
                     <motion.p
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 0.5, duration: 1 }}
-                        className="text-lg md:text-2xl text-neutral-500 max-w-2xl font-light tracking-wide uppercase"
+                        className="text-lg md:text-2xl text-white max-w-2xl font-light tracking-wide uppercase"
                     >
                         Get ready for iconic performance by the students of CUCEK for the film scene recreation 2.0
                     </motion.p>
