@@ -2,6 +2,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { FiX } from 'react-icons/fi';
+import { FaInstagram } from 'react-icons/fa';
 
 const ExpandedImageView = ({ image, onClose }) => (
   <>
@@ -14,10 +15,10 @@ const ExpandedImageView = ({ image, onClose }) => (
       transition={{ duration: 0.5, ease: "circOut" }}
       className="fixed inset-0 z-40 bg-black/90 backdrop-blur-md"
     />
-    
+
     {/* Main modal content area */}
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      
+
       {/* Responsive wrapper for image and text */}
       <div className="flex flex-col lg:flex-row items-center justify-center gap-6 lg:gap-8 w-full max-w-7xl max-h-[90vh]">
 
@@ -35,7 +36,7 @@ const ExpandedImageView = ({ image, onClose }) => (
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           />
         </motion.div>
-        
+
         {/* Text container */}
         <motion.div
           className="w-full lg:w-2/5 flex-shrink-0 text-center lg:text-left"
@@ -45,10 +46,22 @@ const ExpandedImageView = ({ image, onClose }) => (
         >
           <h2 className="text-3xl font-bold">{image.title}</h2>
           <p className="max-w-xl mt-2 text-neutral-300 mx-auto lg:mx-0">{image.description}</p>
+
+          {image.link && (
+            <a
+              href={image.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-6 inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 rounded-full font-semibold text-white transition-transform hover:scale-105"
+            >
+              <FaInstagram className="text-xl" />
+              <span>Watch on Instagram</span>
+            </a>
+          )}
         </motion.div>
 
       </div>
-      
+
       {/* Close button */}
       <motion.button
         onClick={onClose}
