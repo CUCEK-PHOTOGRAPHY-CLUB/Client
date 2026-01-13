@@ -7,6 +7,7 @@ const navLinks = [
   { title: 'About', href: '/about' },
   { title: 'Works', href: '/gallery' },
   { title: 'Join', href: '/join' },
+  { title: 'Film Scene Recreation', href: '/film-recreation' },
   { title: 'Videos', href: '/videos' },
 ];
 
@@ -40,14 +41,14 @@ const MobileMenu = ({ links, isOpen, setIsOpen }) => (
               {link.title}
             </motion.a>
           ))}
-           <motion.button 
-             className="mt-4 border border-white/30 px-6 py-2 rounded-full text-lg font-medium backdrop-blur-sm transition-all duration-200 hover:bg-white/20 text-white"
-             initial={{ y: -20, opacity: 0 }}
-             animate={{ y: 0, opacity: 1 }}
-             transition={{ delay: 0.3 + links.length * 0.1 }}
-            >
-              Contact
-            </motion.button>
+          <motion.button
+            className="mt-4 border border-white/30 px-6 py-2 rounded-full text-lg font-medium backdrop-blur-sm transition-all duration-200 hover:bg-white/20 text-white"
+            initial={{ y: -20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.3 + links.length * 0.1 }}
+          >
+            Contact
+          </motion.button>
         </motion.div>
       </motion.div>
     )}
@@ -79,7 +80,7 @@ const Nav = () => {
           }}
         >
           {/* Logo/Brand */}
-          <motion.div 
+          <motion.div
             className="font-bold text-lg md:text-xl tracking-wide" // Slightly adjusted text size
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -100,9 +101,9 @@ const Nav = () => {
                 </a>
               ))}
             </div>
-            
+
             {/* Desktop Contact Button */}
-            <motion.button 
+            <motion.button
               className="border border-white/30 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 hover:bg-white/20"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -115,7 +116,7 @@ const Nav = () => {
           <div className="md:hidden z-50">
             <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-white">
               <motion.div animate={isMenuOpen ? "open" : "closed"}>
-                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <motion.line x1="4" y1="8" x2="20" y2="8" stroke="white" strokeWidth="2" variants={{ closed: { d: "M 4 8 L 20 8" }, open: { d: "M 6 18 L 18 6" } }} />
                   <motion.line x1="4" y1="16" x2="20" y2="16" stroke="white" strokeWidth="2" variants={{ closed: { d: "M 4 16 L 20 16" }, open: { d: "M 6 6 L 18 18" } }} />
                 </svg>

@@ -7,13 +7,13 @@ import { Analytics } from "@vercel/analytics/react"
 
 // Layout Components
 // FIX: Corrected typo 'componets' to 'components'
-import Nav from './componets/Navbar.jsx'; 
+import Nav from './componets/Navbar.jsx';
 import Footer from './componets/Footer.jsx';
 import LoadingPage from './pages/LoadingPage.jsx';
 
 // Contexts and Protected Route Components
 import { AuthProvider } from './context/AuthContext.jsx';
-import ProtectedRoute from './componets/admin/ProtectedRoute.jsx'; 
+import ProtectedRoute from './componets/admin/ProtectedRoute.jsx';
 import { MemberAuthProvider } from './context/MemberAuthContext.jsx';
 import MemberProtectedRoute from './componets/members/MemberProtectedRoute.jsx';
 
@@ -38,6 +38,7 @@ const LoginPage = lazy(() => import('./pages/LoginPage.jsx'));
 const StorePage = lazy(() => import('./pages/StorePage.jsx'));
 const MyProfile = lazy(() => import('./pages/MyProfile.jsx'));
 const HalloweenEventPage = lazy(() => import('./pages/HalloweenEventPage.jsx'));
+const FilmRecreationPage = lazy(() => import('./pages/FilmRecreationPage.jsx'));
 
 function App() {
   const location = useLocation();
@@ -80,15 +81,16 @@ function App() {
                 <Route path="/gallery" element={<GalleryPage />} />
                 <Route path="/join" element={<JoinPage />} />
                 <Route path="/aaravam" element={<Aaravam />} />
-                      <Route path="/halloween-contest" element={<HalloweenEventPage />} />
+                <Route path="/halloween-contest" element={<HalloweenEventPage />} />
                 <Route path="/event/:eventId" element={<EventPage />} />
                 <Route path="/teampage" element={<Teampage />} />
-                <Route path="/alumni" element={<Alumni />} /> 
+                <Route path="/alumni" element={<Alumni />} />
                 <Route path="/videos" element={<VideoListing />} />
                 <Route path="/video/:id" element={<VideoDetailsPage />} />
                 <Route path="/store" element={<StorePage />} />
+                <Route path="/film-recreation" element={<FilmRecreationPage />} />
                 <Route path='/members/:id' element={<MemberPortfolio />} />
-                
+
                 {/* Catch-all Not Found Route */}
                 <Route path="*" element={<NotFoundPage />} />
               </Routes>
@@ -97,7 +99,7 @@ function App() {
           {!isSpecialRoute && <Footer />}
         </MemberAuthProvider>
       </AuthProvider>
-    </div>  
+    </div>
   );
 }
 
