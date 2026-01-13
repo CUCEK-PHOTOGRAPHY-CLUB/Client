@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom'; // Use Link for internal navigation
-import filmbg from '../assets/FilmSceneRec/filmbg.png';
+import filmbg from '../assets/FilmSceneRec/bg.jpg';
 
 const EventTeaser = () => {
   return (
