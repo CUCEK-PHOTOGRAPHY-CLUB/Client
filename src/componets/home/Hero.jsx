@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 // eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
-import { heroApi } from '../../services/api.js'; // <-- IMPORTANT: Update this path
+import { heroApi } from '../../services/api.js';
 
 const imageVariants = {
   initial: { opacity: 0, scale: 1.1, x: 50 },
@@ -13,6 +13,29 @@ const imageVariants = {
 const textVariants = {
   initial: { opacity: 0, y: 30 },
   animate: { opacity: 1, y: 0, transition: { duration: 0.8, ease: 'easeOut', staggerChildren: 0.2 } },
+};
+
+// Helper to optimize image URLs based on provider
+const getOptimizedImageUrl = (url, width = 1920) => {
+  if (!url) return '';
+
+  // Cloudinary Optimization
+  if (url.includes('cloudinary.com')) {
+    // Check if valid cloudinary url
+    if (url.includes('/upload/')) {
+      return url.replace('/upload/', `/upload/f_auto,q_auto,w_${width}/`);
+    }
+    return url;
+  }
+
+  // Unsplash Optimization
+  if (url.includes('images.unsplash.com')) {
+    const separator = url.includes('?') ? '&' : '?';
+    return `${url}${separator}q=80&w=${width}&auto=format`;
+  }
+
+  // Generic/Unknown provider - return as is
+  return url;
 };
 
 // --- Professional Loading Skeleton Component ---
@@ -94,7 +117,7 @@ const Hero = () => {
     if (heroImages.length === 0) return;
     setImageIndex((prev) => (prev - 1 + heroImages.length) % heroImages.length);
   }, [heroImages.length]);
-  
+
   useEffect(() => {
     if (heroImages.length > 0) {
       const timer = setInterval(nextImage, 6000);
@@ -106,28 +129,35 @@ const Hero = () => {
     setIsImageLoaded(false);
   }, [imageIndex]);
 
+  // Preload next image logic
   useEffect(() => {
     if (heroImages.length > 0) {
       const nextIdx = (imageIndex + 1) % heroImages.length;
-      const img = new Image();
-      img.src = heroImages[nextIdx]?.imageUrl;
+      const nextImage = heroImages[nextIdx];
+      if (nextImage) {
+        const img = new Image();
+        const rawUrl = (isMobile && nextImage.mobileImageUrl) ? nextImage.mobileImageUrl : nextImage.imageUrl;
+        img.src = getOptimizedImageUrl(rawUrl, isMobile ? 800 : 1920);
+      }
     }
-  }, [imageIndex, heroImages]);
+  }, [imageIndex, heroImages, isMobile]);
 
-  // NEW: Use the HeroLoadingSkeleton component
   if (loading) {
     return <HeroLoadingSkeleton />;
   }
-  
+
   if (error) {
-      return <div className="h-screen w-full flex items-center justify-center bg-black text-red-500">{error}</div>;
+    return <div className="h-screen w-full flex items-center justify-center bg-black text-red-500">{error}</div>;
   }
-  
+
   if (heroImages.length === 0) {
-      return <div className="h-screen w-full flex items-center justify-center bg-black text-white">No images found.</div>
+    return <div className="h-screen w-full flex items-center justify-center bg-black text-white">No images found.</div>
   }
 
   const currentImage = heroImages[imageIndex];
+  // Calculate display URL safely
+  const rawImageUrl = (isMobile && currentImage.mobileImageUrl) ? currentImage.mobileImageUrl : currentImage.imageUrl;
+  const displayImageUrl = getOptimizedImageUrl(rawImageUrl, isMobile ? 800 : 1920);
 
   return (
     <section className="relative h-screen w-full flex items-center justify-center text-white overflow-hidden bg-black">
@@ -140,9 +170,9 @@ const Hero = () => {
           animate="animate"
           exit="exit"
         >
-           <img
+          <img
             key={imageIndex}
-            src={isMobile ? currentImage.mobileImageUrl : currentImage.imageUrl} 
+            src={displayImageUrl}
             alt={currentImage.title}
             loading="eager"
             decoding="async"
@@ -157,26 +187,26 @@ const Hero = () => {
               transition: 'all 0.5s ease-in-out'
             }}
           />
-           {!isImageLoaded && (
-             <div className="absolute inset-0 bg-neutral-900">
-               <div className="absolute inset-0 bg-gradient-to-br from-neutral-800/60 via-neutral-900/60 to-black/60" />
-               <div className="absolute inset-0 animate-pulse bg-gradient-to-r from-black/30 via-black/10 to-black/30" />
-             </div>
-           )}
-           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-black/60" />
+          {!isImageLoaded && (
+            <div className="absolute inset-0 bg-neutral-900">
+              <div className="absolute inset-0 bg-gradient-to-br from-neutral-800/60 via-neutral-900/60 to-black/60" />
+              <div className="absolute inset-0 animate-pulse bg-gradient-to-r from-black/30 via-black/10 to-black/30" />
+            </div>
+          )}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-black/60" />
         </motion.div>
       </AnimatePresence>
       <div className="relative z-20 max-w-5xl text-center px-4">
         <motion.div key={imageIndex} variants={textVariants} initial="initial" animate="animate">
-          <motion.h1 
-            className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tighter text-white" 
+          <motion.h1
+            className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tighter text-white"
             style={{ textShadow: '0px 4px 12px rgba(0, 0, 0, 0.5)' }}
             variants={textVariants}
           >
             {currentImage.title}
           </motion.h1>
-          <motion.p 
-            className="mt-6 text-lg md:text-xl max-w-2xl mx-auto text-gray-200" 
+          <motion.p
+            className="mt-6 text-lg md:text-xl max-w-2xl mx-auto text-gray-200"
             style={{ textShadow: '0px 2px 8px rgba(0, 0, 0, 0.5)' }}
             variants={textVariants}
           >
@@ -185,17 +215,17 @@ const Hero = () => {
         </motion.div>
       </div>
       <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex items-center gap-4">
-          <button onClick={prevImage} className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors"><FiChevronLeft size={24} /></button>
-          <div className="w-48 h-1 bg-white/20 rounded-full overflow-hidden">
-            <motion.div 
-              key={imageIndex}
-              className="h-full bg-white"
-              initial={{ width: "0%" }}
-              animate={{ width: "100%" }}
-              transition={{ duration: 6, ease: 'linear' }}
-            />
-          </div>
-          <button onClick={nextImage} className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors"><FiChevronRight size={24} /></button>
+        <button onClick={prevImage} className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors"><FiChevronLeft size={24} /></button>
+        <div className="w-48 h-1 bg-white/20 rounded-full overflow-hidden">
+          <motion.div
+            key={imageIndex}
+            className="h-full bg-white"
+            initial={{ width: "0%" }}
+            animate={{ width: "100%" }}
+            transition={{ duration: 6, ease: 'linear' }}
+          />
+        </div>
+        <button onClick={nextImage} className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors"><FiChevronRight size={24} /></button>
       </div>
     </section>
   );
