@@ -64,14 +64,26 @@ const MobileMenu = ({ links, isOpen, setIsOpen, isMemberAuthenticated, handleMem
               </motion.button>
             </>
           ) : (
-            <motion.button
-              className="mt-4 border border-white/30 px-6 py-2 rounded-full text-lg font-medium backdrop-blur-sm transition-all duration-200 hover:bg-white/20 text-white"
-              initial={{ y: -20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.3 + links.length * 0.1 }}
-            >
-              Contact
-            </motion.button>
+            <div className="flex flex-col items-center gap-4">
+              <Link
+                to="/auth"
+                onClick={() => setIsOpen(false)}
+                className="text-2xl font-medium text-white hover:text-sky-400 transition-colors"
+                initial={{ y: -20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.3 + links.length * 0.1 }}
+              >
+                Member Login
+              </Link>
+              <motion.button
+                className="mt-4 border border-white/30 px-6 py-2 rounded-full text-lg font-medium backdrop-blur-sm transition-all duration-200 hover:bg-white/20 text-white"
+                initial={{ y: -20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.4 + links.length * 0.1 }}
+              >
+                Contact
+              </motion.button>
+            </div>
           )}
         </motion.div>
       </motion.div>
@@ -153,13 +165,21 @@ const Nav = () => {
                 </button>
               </div>
             ) : (
-              <motion.button
-                className="border border-white/30 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 hover:bg-white/20"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Contact
-              </motion.button>
+              <div className="flex items-center gap-4">
+                <Link
+                  to="/auth"
+                  className="px-4 py-2 rounded-full text-sm font-medium border border-white/30 hover:bg-white/10 transition-all"
+                >
+                  Login
+                </Link>
+                <motion.button
+                  className="bg-white/10 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 hover:bg-white/20"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  Contact
+                </motion.button>
+              </div>
             )}
           </div>
 
