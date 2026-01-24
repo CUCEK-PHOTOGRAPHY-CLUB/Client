@@ -5,7 +5,7 @@ import axios from 'axios';
 // Create an Axios instance with a base URL from environment variables
 // It's better practice to use environment variables for the base URL
 const apiClient = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || "https://cpc-photography-api.onrender.com/api",
+  baseURL: "https://cpc-photography-api.onrender.com/api",
   headers: {
     'Content-Type': 'application/json',
   },
