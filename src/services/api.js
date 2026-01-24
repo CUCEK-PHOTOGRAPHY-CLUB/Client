@@ -5,7 +5,7 @@ import axios from 'axios';
 // Create an Axios instance with a base URL from environment variables
 // It's better practice to use environment variables for the base URL
 const apiClient = axios.create({
-  baseURL: "https://cpc-photography-api.onrender.com/api",
+  baseURL: "http://localhost:4000/api",
   headers: {
     'Content-Type': 'application/json',
   },
@@ -67,6 +67,20 @@ export const memberApplicationsApi = {
   approve: (id, adminNotes) => apiClient.put(`/member-applications/${id}/approve`, { adminNotes }),
   // Reject an application
   reject: (id, adminNotes) => apiClient.put(`/member-applications/${id}/reject`, { adminNotes }),
+};
+
+// --- Admin Members Management (Approved Members) ---
+export const adminMembersApi = {
+  // Get all approved members with filtering and pagination
+  getAll: (params) => get('/admin/members', params), // e.g., { team, position, status, search, page, limit }
+  // Get member statistics
+  getStats: () => get('/admin/members/stats'),
+  // Get a single member by ID
+  getById: (userId) => get(`/admin/members/${userId}`),
+  // Update member role (team, position, experience_level)
+  updateRole: (userId, roleData) => apiClient.patch(`/admin/members/${userId}/role`, roleData),
+  // Update member status (activate/deactivate)
+  updateStatus: (userId, isActive) => apiClient.patch(`/admin/members/${userId}/status`, { isActive }),
 };
 
 // --- Admin Dashboard API Service ---

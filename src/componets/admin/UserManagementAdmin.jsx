@@ -33,8 +33,8 @@ const UserListItem = ({ item, onEdit, onDelete, onToggleStatus, onRoleChange }) 
     <div className="flex flex-col space-y-4 rounded-lg border border-slate-700 bg-slate-800/50 p-4 md:flex-row md:items-center md:justify-between md:space-y-0">
         {/* User Info */}
         <div className="flex-1 min-w-0 pr-4">
-            <p className="font-bold text-white truncate">{item.username}</p>
-            <p className="text-sm text-slate-400 truncate">{item.email}</p>
+            <p className="font-bold text-white truncate">{item.name}</p>
+            <p className="text-sm text-slate-400 truncate">{item.username} ({item.email})</p>
         </div>
 
         {/* Details & Actions Group */}
@@ -67,9 +67,24 @@ const UserListItem = ({ item, onEdit, onDelete, onToggleStatus, onRoleChange }) 
 // UserForm is already responsive due to its parent's grid layout, no changes needed
 const UserForm = ({ currentItem, setCurrentItem, isEditing }) => (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <AdminInput id="user-name" label="Username" icon={<FiUser />} value={currentItem.username || ''} onChange={e => setCurrentItem({ ...currentItem, username: e.target.value })} />
+        <AdminInput id="user-full-name" label="Full Name" icon={<FiUser />} value={currentItem.name || ''} onChange={e => setCurrentItem({ ...currentItem, name: e.target.value })} />
+        <AdminInput id="user-username" label="Username" icon={<FiUser />} value={currentItem.username || ''} onChange={e => setCurrentItem({ ...currentItem, username: e.target.value })} />
         <AdminInput id="user-email" label="Email Address" type="email" icon={<FiMail />} value={currentItem.email || ''} onChange={e => setCurrentItem({ ...currentItem, email: e.target.value })} />
         <AdminInput id="user-password" label="Password" type="password" icon={<FiLock />} value={currentItem.password || ''} onChange={e => setCurrentItem({ ...currentItem, password: e.target.value })} placeholder={isEditing ? "Leave blank to keep current password" : "Enter a new password"} />
+        <div>
+            <label htmlFor="user-role" className="block text-sm font-medium text-slate-300 mb-2">Role</label>
+            <select
+                id="user-role"
+                value={currentItem.role || 'member'}
+                onChange={e => setCurrentItem({ ...currentItem, role: e.target.value })}
+                className="w-full px-4 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent"
+            >
+                <option value="member">Member</option>
+                <option value="user">User</option>
+                <option value="moderator">Moderator</option>
+                <option value="admin">Admin</option>
+            </select>
+        </div>
     </div>
 );
 
@@ -148,7 +163,7 @@ const UserManagementAdmin = () => {
                 items={users}
                 FormComponent={UserForm}
                 ListItemComponent={UserListItem}
-                initialFormState={{ id: null, username: '', email: '', password: '', role: 'moderator' }}
+                initialFormState={{ id: null, name: '', username: '', email: '', password: '', role: 'member' }}
                 api={apiWithPasswordHandling}
                 onDataChange={() => fetchUsers(currentPage)}
                 onToggleStatus={handleToggleStatus}
