@@ -69,6 +69,20 @@ export const memberApplicationsApi = {
   reject: (id, adminNotes) => apiClient.put(`/member-applications/${id}/reject`, { adminNotes }),
 };
 
+// --- Admin Members Management (Approved Members) ---
+export const adminMembersApi = {
+  // Get all approved members with filtering and pagination
+  getAll: (params) => get('/admin/members', params), // e.g., { team, position, status, search, page, limit }
+  // Get member statistics
+  getStats: () => get('/admin/members/stats'),
+  // Get a single member by ID
+  getById: (userId) => get(`/admin/members/${userId}`),
+  // Update member role (team, position, experience_level)
+  updateRole: (userId, roleData) => apiClient.patch(`/admin/members/${userId}/role`, roleData),
+  // Update member status (activate/deactivate)
+  updateStatus: (userId, isActive) => apiClient.patch(`/admin/members/${userId}/status`, { isActive }),
+};
+
 // --- Admin Dashboard API Service ---
 export const adminApi = {
   // Get dashboard statistics
