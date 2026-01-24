@@ -1,6 +1,7 @@
 // src/components/join/RegistrationFormSection.js
 import React, { useState } from 'react';
 import { FiUser, FiMail, FiAward, FiMessageSquare } from 'react-icons/fi';
+import emailjs from '@emailjs/browser';
 import { memberApi } from '../../services/api'; // Assuming your api.js is in a services folder
 import AnimatedInput from './AnimatedInput.jsx'; // Assuming you have this component
 
@@ -46,6 +47,27 @@ const RegistrationFormSection = () => {
       };
 
       const response = await memberApi.submitApplication(apiPayload);
+
+      // --- Send Confirmation Email (Frontend) ---
+      try {
+        await emailjs.send(
+          'service_d7cg6kh', // Service ID
+          'template_gfx6ckf', // Admin Notification Template ID
+          {
+            to_name: 'Admin', // Addressed to Admin
+            to_email: 'cucekphotographyclub@gmail.com', // Send to Admin ONLY
+            from_name: formData.name, // The applicant name
+            from_email: formData.email,
+            prog_year: formData.program,
+            message: formData.description
+          },
+          'aZVQJExOaotV0PhEh' // Public Key
+        );
+        console.log('✅ Confirmation email sent');
+      } catch (emailErr) {
+        console.error('❌ Failed to send confirmation email', emailErr);
+        // We do NOT block the UI success message here, just log it.
+      }
 
       // Handle success
       setFeedback({ message: response.data.message || 'Application submitted successfully! You will receive login credentials via email once approved by admin.', type: 'success' });
