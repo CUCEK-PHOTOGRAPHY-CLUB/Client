@@ -22,14 +22,18 @@ const LoginPage = () => {
     e.preventDefault();
     setError('');
     setLoading(true);
-    
+
     try {
       // Call the login function from our context
-      await memberLogin({ email, password });
-      
-      // On success, redirect to the member's profile or dashboard
-      navigate('/member/profile'); 
+      const user = await memberLogin({ email, password });
 
+      // On success, redirect to the member's public portfolio page
+      if (user && user.id) {
+        navigate(`/members/${user.id}`);
+      } else {
+        // Fallback if ID is missing
+        navigate('/memberprofile');
+      }
     } catch (err) {
       // If the context throws an error, display it
       const errorMessage = err.response?.data?.message || "Login failed. Please check your credentials.";
@@ -41,7 +45,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="bg-black min-h-screen text-white flex items-center justify-center p-4 bg-cover bg-center" style={{backgroundImage: "url('https://images.pexels.com/photos/2246476/pexels-photo-2246476.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')"}}>
+    <div className="bg-black min-h-screen text-white flex items-center justify-center p-4 bg-cover bg-center" style={{ backgroundImage: "url('https://images.pexels.com/photos/2246476/pexels-photo-2246476.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')" }}>
       <div className="absolute inset-0 bg-black/60 backdrop-blur-lg"></div>
 
       <motion.div
@@ -67,7 +71,7 @@ const LoginPage = () => {
               </motion.div>
             )}
           </AnimatePresence>
-          
+
           <div className="relative">
             <FiMail className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-zinc-500" />
             <input type="email" placeholder="Email Address" value={email} onChange={(e) => setEmail(e.target.value)} required className={inputFieldStyles} />
@@ -77,7 +81,7 @@ const LoginPage = () => {
             <FiLock className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-zinc-500" />
             <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required className={inputFieldStyles} />
           </div>
-          
+
           <button
             type="submit"
             disabled={loading} // 6. Updated button state

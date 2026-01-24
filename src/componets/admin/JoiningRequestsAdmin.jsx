@@ -92,7 +92,7 @@ const JoiningRequestsAdmin = () => {
                                 to_name: request.name,
                                 to_email: request.email,
                                 password: generatedPassword,
-                                login_link: window.location.origin + '/member/login' // Dynamic link
+                                login_link: window.location.origin + '/auth' // Dynamic link
                             },
                             'aZVQJExOaotV0PhEh' // Public Key
                         );

@@ -55,6 +55,7 @@ const RegistrationFormSection = () => {
           'template_gfx6ckf', // Admin Notification Template ID
           {
             to_name: 'Admin', // Addressed to Admin
+            login_link: window.location.origin + '/auth', // Dynamic link
             to_email: 'cucekphotographyclub@gmail.com', // Send to Admin ONLY
             from_name: formData.name, // The applicant name
             from_email: formData.email,
@@ -70,7 +71,7 @@ const RegistrationFormSection = () => {
       }
 
       // Handle success
-      setFeedback({ message: response.data.message || 'Application submitted successfully! You will receive login credentials via email once approved by admin.', type: 'success' });
+      setFeedback({ message: response.data.message || 'Application submitted successfully! You will be notified once reviewed. Check /auth to login once approved.', type: 'success' });
       setFormStatus('success');
       // Reset form after successful submission
       setFormData({ name: '', email: '', program: '', description: '' });
