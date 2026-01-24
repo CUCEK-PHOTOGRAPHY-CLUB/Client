@@ -12,7 +12,7 @@ const navLinks = [
 ];
 
 // --- Mobile Menu Component (Unchanged) ---
-const MobileMenu = ({ links, isOpen, setIsOpen }) => (
+const MobileMenu = ({ links, isOpen, setIsOpen, isMemberAuthenticated, handleMemberLogout, member }) => (
   <AnimatePresence>
     {isOpen && (
       <motion.div
@@ -41,24 +41,58 @@ const MobileMenu = ({ links, isOpen, setIsOpen }) => (
               {link.title}
             </motion.a>
           ))}
-          <motion.button
-            className="mt-4 border border-white/30 px-6 py-2 rounded-full text-lg font-medium backdrop-blur-sm transition-all duration-200 hover:bg-white/20 text-white"
-            initial={{ y: -20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.3 + links.length * 0.1 }}
-          >
-            Contact
-          </motion.button>
+          {isMemberAuthenticated ? (
+            <>
+              <motion.a
+                href={`/members/${member?.id}`}
+                onClick={() => setIsOpen(false)}
+                className="text-2xl font-medium text-sky-400 hover:text-sky-300 transition-colors"
+                initial={{ y: -20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.3 + links.length * 0.1 }}
+              >
+                My Portfolio
+              </motion.a>
+              <motion.button
+                onClick={() => { handleMemberLogout(); setIsOpen(false); }}
+                className="mt-4 border border-red-500/30 px-6 py-2 rounded-full text-lg font-medium text-red-400"
+                initial={{ y: -20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.4 + links.length * 0.1 }}
+              >
+                Logout
+              </motion.button>
+            </>
+          ) : (
+            <motion.button
+              className="mt-4 border border-white/30 px-6 py-2 rounded-full text-lg font-medium backdrop-blur-sm transition-all duration-200 hover:bg-white/20 text-white"
+              initial={{ y: -20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.3 + links.length * 0.1 }}
+            >
+              Contact
+            </motion.button>
+          )}
         </motion.div>
       </motion.div>
     )}
   </AnimatePresence>
 );
 
+import { useMemberAuth } from '../context/MemberAuthContext.jsx';
+import { useNavigate, Link } from 'react-router-dom';
+
 // --- Main Navigation Component (MODIFIED) ---
 const Nav = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [hasScrolled, setHasScrolled] = useState(false);
+  const { isMemberAuthenticated, memberLogout, member } = useMemberAuth();
+  const navigate = useNavigate();
+
+  const handleMemberLogout = async () => {
+    await memberLogout();
+    navigate('/');
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -102,14 +136,31 @@ const Nav = () => {
               ))}
             </div>
 
-            {/* Desktop Contact Button */}
-            <motion.button
-              className="border border-white/30 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 hover:bg-white/20"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Contact
-            </motion.button>
+            {/* Desktop Member/Contact Buttons */}
+            {isMemberAuthenticated ? (
+              <div className="flex items-center gap-4">
+                <Link
+                  to={`/members/${member?.id}`}
+                  className="px-4 py-2 rounded-full text-sm font-medium bg-white/10 hover:bg-white/20 transition-all"
+                >
+                  My Portfolio
+                </Link>
+                <button
+                  onClick={handleMemberLogout}
+                  className="border border-red-500/30 px-4 py-2 rounded-full text-sm font-medium text-red-400 hover:bg-red-500/10 transition-all"
+                >
+                  Logout
+                </button>
+              </div>
+            ) : (
+              <motion.button
+                className="border border-white/30 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 hover:bg-white/20"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                Contact
+              </motion.button>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -126,7 +177,14 @@ const Nav = () => {
         </motion.div>
       </nav>
       {/* Render Mobile Menu */}
-      <MobileMenu links={navLinks} isOpen={isMenuOpen} setIsOpen={setIsMenuOpen} />
+      <MobileMenu
+        links={navLinks}
+        isOpen={isMenuOpen}
+        setIsOpen={setIsMenuOpen}
+        isMemberAuthenticated={isMemberAuthenticated}
+        handleMemberLogout={handleMemberLogout}
+        member={member}
+      />
     </>
   );
 };

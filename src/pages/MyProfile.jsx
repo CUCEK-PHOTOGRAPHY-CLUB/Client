@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { memberProfileApi } from '../services/api.js';
-import { FiUser, FiFileText, FiCamera, FiLink, FiMapPin, FiBarChart2, FiSave, FiLoader, FiCheckCircle, FiAlertCircle } from 'react-icons/fi';
+import { FiUser, FiFileText, FiCamera, FiLink, FiMapPin, FiBarChart2, FiSave, FiLoader, FiAlertCircle, FiCheckCircle } from 'react-icons/fi';
 import { toast } from 'react-toastify';
+import { useMemberAuth } from '../context/MemberAuthContext.jsx';
+import { useNavigate } from 'react-router-dom';
 
 const MyProfile = () => {
+  const { } = useMemberAuth();
+
   const [profile, setProfile] = useState({
     bio: '',
     experience_level: 'beginner',
@@ -93,7 +97,7 @@ const MyProfile = () => {
           </div>
           <div>
             <h1 className="text-3xl font-bold">Edit Your Profile</h1>
-            <p className="text-zinc-500">How your portfolio appears to the club and public.</p>
+            <p className="text-zinc-500 text-sm">How your portfolio appears to the public.</p>
           </div>
         </div>
 
