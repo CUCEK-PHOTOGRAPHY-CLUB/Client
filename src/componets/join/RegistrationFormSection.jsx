@@ -26,7 +26,7 @@ const RegistrationFormSection = () => {
   // Handler for form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     // Basic validation
     if (!formData.name || !formData.email || !formData.program || !formData.description) {
       setFeedback({ message: 'All fields are required.', type: 'error' });
@@ -41,13 +41,12 @@ const RegistrationFormSection = () => {
       const apiPayload = {
         name: formData.name,
         email: formData.email,
-        password: 'temp_password_123',
         prog_year: formData.program, // Map 'program' to 'prog_year'
         description: formData.description,
       };
 
       const response = await memberApi.submitApplication(apiPayload);
-      
+
       // Handle success
       setFeedback({ message: response.data.message || 'Application submitted successfully! You will receive login credentials via email once approved by admin.', type: 'success' });
       setFormStatus('success');
@@ -66,7 +65,7 @@ const RegistrationFormSection = () => {
     <section>
       <div className="max-w-lg mx-auto bg-neutral-900/50 p-8 md:p-12 rounded-xl border border-white/10">
         <h2 className="text-2xl font-bold text-center mb-6">Join The Club</h2>
-        
+
         {/* Feedback message display */}
         {feedback.message && (
           <div className={`p-4 mb-6 text-center rounded-lg ${feedback.type === 'error' ? 'bg-red-900/50 text-red-300' : 'bg-green-900/50 text-green-300'}`}>
@@ -78,15 +77,15 @@ const RegistrationFormSection = () => {
           <AnimatedInput id="name" label="Your Name" icon={<FiUser />} value={formData.name} onChange={handleInputChange} />
           <AnimatedInput id="email" label="Email Address" type="email" icon={<FiMail />} value={formData.email} onChange={handleInputChange} />
           <AnimatedInput id="program" label="Passout Year" icon={<FiAward />} value={formData.program} onChange={handleInputChange} />
-          
+
           {/* New field for description */}
-          <AnimatedInput 
-            id="description" 
-            label="Why do you want to join?" 
+          <AnimatedInput
+            id="description"
+            label="Why do you want to join?"
             as="textarea" // Use textarea for multiline input
-            icon={<FiMessageSquare />} 
-            value={formData.description} 
-            onChange={handleInputChange} 
+            icon={<FiMessageSquare />}
+            value={formData.description}
+            onChange={handleInputChange}
           />
 
           <button
