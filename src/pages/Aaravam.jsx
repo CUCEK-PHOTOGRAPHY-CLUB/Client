@@ -14,9 +14,9 @@ function App() {
         ">
           AARAVAM '25
         </h1>
-        
+
         <p className="text-gray-400 mt-4 max-w-2xl text-lg mx-auto md:mx-0">
-           Onam @ CUCEK celebrates tradition and togetherness with vibrant pookkalam, cultural performances, fun games, and Onasadya. This gallery captures joyful moments, colors, and the festive spirit of Onam at CUCEK.
+          Onam at CUCEK celebrates tradition and togetherness with vibrant pookkalam, cultural performances, fun games, and Onasadya. This gallery captures joyful moments, colors, and the festive spirit of Onam at CUCEK.
         </p>
 
         {/* --- BUTTON AND GLOW EFFECT UPDATED --- */}
