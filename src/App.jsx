@@ -39,6 +39,7 @@ const StorePage = lazy(() => import('./pages/StorePage.jsx'));
 const MyProfile = lazy(() => import('./pages/MyProfile.jsx'));
 const HalloweenEventPage = lazy(() => import('./pages/HalloweenEventPage.jsx'));
 const FilmRecreationPage = lazy(() => import('./pages/FilmRecreationPage.jsx'));
+const MemberDetailsPage = lazy(() => import('./pages/MemberDetailsPage.jsx'));
 
 function App() {
   const location = useLocation();
@@ -90,7 +91,7 @@ function App() {
                 <Route path="/store" element={<StorePage />} />
                 <Route path="/film-recreation" element={<FilmRecreationPage />} />
                 <Route path='/members/:id' element={<MemberPortfolio />} />
-
+                <Route path='/member-details' element={<MemberDetailsPage />} />
                 {/* Catch-all Not Found Route */}
                 <Route path="*" element={<NotFoundPage />} />
               </Routes>
