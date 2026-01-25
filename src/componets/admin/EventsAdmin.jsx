@@ -80,7 +80,10 @@ const EventsAdmin = () => {
             const response = await eventsApi.getAll();
             // --- FIX APPLIED HERE ---
             // The actual data is a direct array inside `response.data.data`
-            setItems(response.data.data);
+            const events = response.data.data;
+            // Sort by eventDate in descending order (newest first)
+            const sortedEvents = events.sort((a, b) => new Date(b.eventDate) - new Date(a.eventDate));
+            setItems(sortedEvents);
         } catch (err) {
             setError('Failed to fetch events.');
             console.error(err);
