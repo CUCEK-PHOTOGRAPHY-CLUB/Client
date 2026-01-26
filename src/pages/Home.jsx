@@ -19,11 +19,10 @@ function Home() {
           <Hero />
           <div id="work" className="min-h-screen text-center relative">
             <AboutSection />
-              {/* 2. Add the Halloween Contest section here */}
-            <EventTeaser />
+            {/* Events Section - Featured prominently */}
+            <Event />
             {/* <OnamBanner /> */}
             <Gallery />
-            <Event />
             <Team />
             <Testimonials />
             <SocialFeed />
