@@ -155,7 +155,7 @@ const EventSection = () => {
         <button
           onClick={() => handleScroll('left')}
           disabled={!canScrollLeft}
-          className="absolute left-0 md:-left-16 top-1/2 -translate-y-1/2 z-20 p-4 rounded-full bg-white/10 backdrop-blur-sm text-white hover:bg-white/20 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300 hover:scale-110 shadow-xl"
+          className="hidden md:block absolute left-0 md:-left-16 top-1/2 -translate-y-1/2 z-20 p-4 rounded-full bg-white/10 backdrop-blur-sm text-white hover:bg-white/20 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300 hover:scale-110 shadow-xl"
         >
           <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
             <path d="M15 18l-6-6 6-6" />
@@ -165,13 +165,14 @@ const EventSection = () => {
         {/* Single Event Card Container */}
         <div
           ref={containerRef}
-          className="overflow-hidden"
+          className="overflow-x-auto overflow-y-hidden scrollbar-hide scroll-smooth"
+          style={{
+            scrollSnapType: 'x mandatory',
+            WebkitOverflowScrolling: 'touch'
+          }}
         >
           <div
             className="flex transition-transform duration-500 ease-out"
-            style={{
-              scrollSnapType: 'x mandatory'
-            }}
           >
             {events.map((event, index) => (
               <div
@@ -188,7 +189,7 @@ const EventSection = () => {
         <button
           onClick={() => handleScroll('right')}
           disabled={!canScrollRight}
-          className="absolute right-0 md:-right-16 top-1/2 -translate-y-1/2 z-20 p-4 rounded-full bg-white/10 backdrop-blur-sm text-white hover:bg-white/20 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300 hover:scale-110 shadow-xl"
+          className="hidden md:block absolute right-0 md:-right-16 top-1/2 -translate-y-1/2 z-20 p-4 rounded-full bg-white/10 backdrop-blur-sm text-white hover:bg-white/20 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300 hover:scale-110 shadow-xl"
         >
           <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
             <path d="M9 18l6-6-6-6" />
