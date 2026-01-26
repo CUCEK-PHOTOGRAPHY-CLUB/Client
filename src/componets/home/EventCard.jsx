@@ -21,7 +21,7 @@ export const EventCard = ({ event, index, isLarge = false }) => {
       <Link to={`/event/${event.id}`} className="block h-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-black focus:ring-blue-500 rounded-3xl">
         <motion.div
           key={event.id}
-          className="relative bg-zinc-900 rounded-3xl overflow-hidden shadow-2xl border border-zinc-800 group"
+          className="h-full relative bg-zinc-900 rounded-3xl overflow-hidden shadow-2xl border border-zinc-800 group"
           variants={cardVariants}
           initial="hidden"
           whileInView="visible"
@@ -33,7 +33,7 @@ export const EventCard = ({ event, index, isLarge = false }) => {
           <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
 
           {/* Horizontal Layout for Large Card */}
-          <div className="flex flex-col md:flex-row">
+          <div className="h-full flex flex-col md:flex-row">
             {/* Event Image - Larger and more prominent */}
             <div className="relative md:w-1/2 h-64 md:h-96 overflow-hidden flex-shrink-0 bg-zinc-800">
               <img
@@ -60,7 +60,7 @@ export const EventCard = ({ event, index, isLarge = false }) => {
             </div>
 
             {/* Event Content - Spacious and prominent */}
-            <div className="md:w-1/2 p-8 md:p-10 flex flex-col justify-between">
+            <div className="md:w-1/2 p-8 md:p-10 flex flex-col justify-between flex-1">
               <div>
                 <h3 className="text-3xl md:text-4xl font-bold mb-4 text-white leading-tight">
                   {event.title}
@@ -93,7 +93,7 @@ export const EventCard = ({ event, index, isLarge = false }) => {
     <Link to={`/event/${event.id}`} className="block h-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-black focus:ring-blue-500 rounded-3xl">
       <motion.div
         key={event.id}
-        className="relative bg-zinc-900 rounded-3xl overflow-hidden shadow-2xl border border-zinc-800 group"
+        className="h-full relative bg-zinc-900 rounded-3xl overflow-hidden shadow-2xl border border-zinc-800 group"
         variants={cardVariants}
         initial="hidden"
         whileInView="visible"
@@ -101,7 +101,7 @@ export const EventCard = ({ event, index, isLarge = false }) => {
         transition={{ delay: index * 0.15 }}
         whileHover={{ y: -4, transition: { type: "spring", stiffness: 300 } }}
       >
-        <div className="flex flex-col md:flex-row">
+        <div className="h-full flex flex-col md:flex-row">
           <div className="relative md:w-1/2 h-64 md:h-96 overflow-hidden flex-shrink-0 bg-zinc-800">
             <img
               src={event.image}
@@ -124,7 +124,7 @@ export const EventCard = ({ event, index, isLarge = false }) => {
               </div>
             </div>
           </div>
-          <div className="md:w-1/2 p-8 md:p-10 flex flex-col justify-between">
+          <div className="md:w-1/2 p-8 md:p-10 flex flex-col justify-between flex-1">
             <div>
               <h3 className="text-3xl md:text-4xl font-bold mb-4 text-white leading-tight">
                 {event.title}

@@ -2,33 +2,20 @@ import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../context/AuthContext.jsx'; // Make sure path is correct
 import {
-    FiImage, FiCalendar, FiUsers, FiMessageSquare,
-    FiInstagram, FiStar, FiLogOut, FiGrid, FiFilm,
-    FiUserPlus, FiUserCheck
+    FiLogOut, FiGrid
 } from 'react-icons/fi';
+import { SIDEBAR_ITEMS } from '../data/sidebarItems.jsx'; // Import the constant
 
 // --- Centralized Configuration for Sidebar ---
-// EXPORT this so AdminPage can access it
-export const SIDEBAR_ITEMS = [
-    { id: 'hero', label: 'Hero', icon: <FiStar size={20} /> },
-    { id: 'gallery', label: 'Gallery', icon: <FiImage size={20} /> },
-    { id: 'events', label: 'Events', icon: <FiCalendar size={20} /> },
-    { id: 'team', label: 'Team', icon: <FiUsers size={20} /> },
-    { id: 'testimonials', label: 'Testimonials', icon: <FiMessageSquare size={20} /> },
-    { id: 'instagram', label: 'Instagram', icon: <FiInstagram size={20} /> },
-    { id: 'users', label: 'User Management', icon: <FiUsers size={20} /> },
-    { id: 'videos', label: 'Videos', icon: <FiFilm size={20} /> },
-    { id: 'joining-requests', label: 'Joining Requests', icon: <FiUserPlus size={20} /> },
-    { id: 'event-upload', label: 'Event Upload', icon: <FiCalendar size={20} /> },
-    { id: 'member-management', label: 'Member Management', icon: <FiUserCheck size={20} /> },
-];
+// SIDEBAR_ITEMS is now imported
+
 
 const TabButton = ({ id, label, icon, activeTab, onClick }) => (
     <button
         onClick={() => onClick(id)}
         className={`flex items-center w-full gap-3 py-3 px-4 rounded-lg text-base transition-all duration-200 ${activeTab === id
-                ? 'bg-sky-500 text-white shadow-lg shadow-sky-500/30'
-                : 'text-slate-400 hover:bg-slate-700/50 hover:text-white'
+            ? 'bg-sky-500 text-white shadow-lg shadow-sky-500/30'
+            : 'text-slate-400 hover:bg-slate-700/50 hover:text-white'
             }`}
     >
         {icon}
@@ -53,7 +40,7 @@ const AdminSidebar = ({ activeTab, setActiveTab, isSidebarOpen, setIsSidebarOpen
             </div>
 
             {/* Navigation */}
-            <nav className="flex-1 p-4 space-y-2">
+            <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
                 {SIDEBAR_ITEMS.map((item) => (
                     <TabButton
                         key={item.id}

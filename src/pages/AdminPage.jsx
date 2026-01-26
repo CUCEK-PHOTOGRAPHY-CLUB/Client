@@ -17,7 +17,8 @@ import Uploader from './Uploader.jsx'; // Import the Uploader component
 import MemberManagementAdmin from '../componets/admin/MemberManagementAdmin.jsx';
 
 // Import layout components with corrected paths
-import AdminSidebar, { SIDEBAR_ITEMS } from '../layout/AdminSidebar.jsx';
+import AdminSidebar from '../layout/AdminSidebar.jsx';
+import { SIDEBAR_ITEMS } from '../data/sidebarItems.jsx';
 import AdminHeader from '../layout/AdminHeader.jsx';
 
 // --- A "Router" component to select which admin panel to show ---
@@ -32,7 +33,6 @@ const ContentPanel = ({ activeTab }) => {
         case 'testimonials': return <TestimonialsAdmin />;
         case 'instagram': return <InstagramAdmin />;
         case 'users': return <UserManagementAdmin />;
-        case 'videos': return <VideoAdmin />;
         case 'videos': return <VideoAdmin />;
         case 'joining-requests': return <JoiningRequestsAdmin />;
         case 'event-upload': return <Uploader />;
@@ -60,8 +60,8 @@ const AdminPage = () => {
     const currentTabLabel = SIDEBAR_ITEMS.find(item => item.id === activeTab)?.label || 'Dashboard';
 
     return (
-        <div className="w-full min-h-screen bg-slate-900 text-slate-100 font-sans">
-            <div className="flex h-screen">
+        <div className="w-full min-h-screen bg-slate-900 text-slate-100 font-sans overflow-hidden">
+            <div className="flex h-screen overflow-hidden">
                 <AdminSidebar
                     activeTab={activeTab}
                     setActiveTab={setActiveTab}

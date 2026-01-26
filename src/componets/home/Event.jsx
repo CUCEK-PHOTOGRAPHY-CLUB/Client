@@ -230,7 +230,7 @@ const EventSection = () => {
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
           >
-            Upcoming Events
+            Events
           </h2>
           <p className="text-gray-400 text-lg max-w-2xl mx-auto">
             Join us for exciting events and make unforgettable memories
