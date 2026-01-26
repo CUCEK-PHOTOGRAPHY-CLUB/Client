@@ -13,6 +13,7 @@ import InstagramAdmin from '../componets/admin/InstagramAdmin.jsx';
 import UserManagementAdmin from '../componets/admin/UserManagementAdmin.jsx';
 import VideoAdmin from '../componets/admin/VideoAdmin.jsx';
 import JoiningRequestsAdmin from '../componets/admin/JoiningRequestsAdmin.jsx';
+import Uploader from './Uploader.jsx'; // Import the Uploader component
 
 // Import layout components with corrected paths
 import AdminSidebar, { SIDEBAR_ITEMS } from '../layout/AdminSidebar.jsx';
@@ -31,10 +32,12 @@ const ContentPanel = ({ activeTab }) => {
         case 'instagram': return <InstagramAdmin />;
         case 'users': return <UserManagementAdmin />;
         case 'videos': return <VideoAdmin />;
+        case 'videos': return <VideoAdmin />;
         case 'joining-requests': return <JoiningRequestsAdmin />;
+        case 'event-upload': return <Uploader />;
         default: return (
             <div className="flex items-center justify-center h-64">
-                 <div className="text-center text-slate-500">Select a category from the sidebar to begin.</div>
+                <div className="text-center text-slate-500">Select a category from the sidebar to begin.</div>
             </div>
         );
     }
@@ -50,7 +53,7 @@ const AdminPage = () => {
     // Start on 'joining-requests' for convenience as it's an important tab.
     const [activeTab, setActiveTab] = useState('joining-requests');
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-    
+
     // The main page is now stateless regarding content, which is cleaner.
     const currentTabLabel = SIDEBAR_ITEMS.find(item => item.id === activeTab)?.label || 'Dashboard';
 
@@ -69,19 +72,19 @@ const AdminPage = () => {
                         pageTitle={currentTabLabel}
                         setIsSidebarOpen={setIsSidebarOpen}
                     />
-                    
+
                     {/* The main scrollable content area */}
                     <div className="flex-1 overflow-y-auto">
                         <main className="p-4 md:p-6 lg:p-8">
-                             {/* 3. ENHANCED HEADER DESIGN */}
-                             <div className="pb-6 mb-8 border-b border-slate-700">
+                            {/* 3. ENHANCED HEADER DESIGN */}
+                            <div className="pb-6 mb-8 border-b border-slate-700">
                                 <h1 className="text-3xl font-bold text-white">{currentTabLabel}</h1>
                                 <p className="mt-1 text-slate-400">View and manage all {currentTabLabel.toLowerCase()} here.</p>
-                             </div>
+                            </div>
 
-                             <ContentPanel activeTab={activeTab} />
+                            <ContentPanel activeTab={activeTab} />
                         </main>
-                        
+
                         <AdminFooter />
                     </div>
                 </div>

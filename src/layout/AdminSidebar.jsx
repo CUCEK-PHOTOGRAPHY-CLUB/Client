@@ -1,8 +1,8 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../context/AuthContext.jsx'; // Make sure path is correct
-import { 
-    FiImage, FiCalendar, FiUsers, FiMessageSquare, 
+import {
+    FiImage, FiCalendar, FiUsers, FiMessageSquare,
     FiInstagram, FiStar, FiLogOut, FiGrid, FiFilm,
     FiUserPlus
 } from 'react-icons/fi';
@@ -19,16 +19,16 @@ export const SIDEBAR_ITEMS = [
     { id: 'users', label: 'User Management', icon: <FiUsers size={20} /> },
     { id: 'videos', label: 'Videos', icon: <FiFilm size={20} /> },
     { id: 'joining-requests', label: 'Joining Requests', icon: <FiUserPlus size={20} /> },
+    { id: 'event-upload', label: 'Event Upload', icon: <FiCalendar size={20} /> },
 ];
 
 const TabButton = ({ id, label, icon, activeTab, onClick }) => (
     <button
         onClick={() => onClick(id)}
-        className={`flex items-center w-full gap-3 py-3 px-4 rounded-lg text-base transition-all duration-200 ${
-            activeTab === id 
-                ? 'bg-sky-500 text-white shadow-lg shadow-sky-500/30' 
+        className={`flex items-center w-full gap-3 py-3 px-4 rounded-lg text-base transition-all duration-200 ${activeTab === id
+                ? 'bg-sky-500 text-white shadow-lg shadow-sky-500/30'
                 : 'text-slate-400 hover:bg-slate-700/50 hover:text-white'
-        }`}
+            }`}
     >
         {icon}
         <span className="font-medium">{label}</span>
@@ -47,7 +47,7 @@ const AdminSidebar = ({ activeTab, setActiveTab, isSidebarOpen, setIsSidebarOpen
         <div className="flex flex-col h-full bg-slate-800 border-r border-slate-700">
             {/* Logo/Header */}
             <div className="px-6 py-5 border-b border-slate-700 flex items-center gap-3">
-                <FiGrid className="text-sky-400" size={24}/>
+                <FiGrid className="text-sky-400" size={24} />
                 <h1 className="text-xl font-bold text-white">Admin Panel</h1>
             </div>
 
@@ -77,7 +77,7 @@ const AdminSidebar = ({ activeTab, setActiveTab, isSidebarOpen, setIsSidebarOpen
             </div>
         </div>
     );
-    
+
     return (
         <>
             {/* --- MOBILE SIDEBAR with Overlay --- */}
@@ -106,7 +106,7 @@ const AdminSidebar = ({ activeTab, setActiveTab, isSidebarOpen, setIsSidebarOpen
                     </>
                 )}
             </AnimatePresence>
-            
+
             {/* --- DESKTOP SIDEBAR --- */}
             <aside className="hidden md:flex flex-col w-72 flex-shrink-0">
                 <SidebarContent />
