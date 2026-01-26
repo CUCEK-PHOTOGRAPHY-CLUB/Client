@@ -164,8 +164,9 @@ const Team = () => {
 
       <div className="hidden md:block relative w-full h-[80px] lg:h-[100px] overflow-hidden text-center">
         {teamMembers.map((member) => (
-            <div key={member.id} className={`absolute w-full h-full flex justify-center items-center text-5xl lg:text-6xl font-extrabold uppercase transition-transform duration-500 ease-in-out ${activeId === member.id ? 'translate-y-0' : 'translate-y-full'}`}>
-                {member.name}
+            <div key={member.id} className={`absolute w-full h-full flex flex-col justify-center items-center transition-transform duration-500 ease-in-out ${activeId === member.id ? 'translate-y-0' : 'translate-y-full'}`}>
+                <div className="text-5xl lg:text-6xl font-extrabold uppercase">{member.name}</div>
+                {member.position && <div className="text-lg lg:text-xl font-medium text-gray-400 mt-1">{member.position}</div>}
             </div>
         ))}
       </div>

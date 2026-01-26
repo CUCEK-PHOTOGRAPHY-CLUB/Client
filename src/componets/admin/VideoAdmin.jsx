@@ -163,7 +163,7 @@ const VideoAdmin = () => {
         const fetchDataForDropdowns = async () => {
             try {
                 const [eventsResponse, usersResponse] = await Promise.all([ eventsApi.getAll(1, 1000), usersApi.getAll(1, 1000) ]);
-                setEvents(eventsResponse.data.data.events || []);
+                setEvents(eventsResponse.data.data || []);
                 setUsers(usersResponse.data.data.users || []);
             } catch (error) { console.error("Failed to fetch dropdown data:", error); } 
             finally { setLoadingEvents(false); setLoadingUsers(false); }

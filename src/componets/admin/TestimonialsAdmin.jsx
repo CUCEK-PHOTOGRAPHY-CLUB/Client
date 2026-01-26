@@ -43,9 +43,9 @@ const TestimonialForm = ({ currentItem, setCurrentItem }) => (
         {/* SIMPLIFICATION: Standardized on 'imageUrl' */}
         <AdminInput 
             id="test-image" 
-            label="Image URL" 
+            label="Avatar URL (Defaults to placeholder)" 
             icon={<FiImage />} 
-            value={currentItem.imageUrl || ''} 
+            value={currentItem.imageUrl || 'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png'} 
             onChange={e => setCurrentItem({ ...currentItem, imageUrl: e.target.value })} 
             required
         />
