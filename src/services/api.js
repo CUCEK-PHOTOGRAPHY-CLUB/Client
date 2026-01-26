@@ -168,6 +168,7 @@ export const publicApi = {
   getGallery: (page = 1, limit = 20) => get('/public/gallery', { page, limit }),
   getEvents: (page = 1, limit = 10) => get('/public/events', { page, limit }),
   getTeam: () => get('/public/team'),
+  getAllMembers: (params = {}) => get('/public/members', params),
   getMemberProfile: (userId) => get(`/public/members/${userId}`),
   getMemberGallery: (userId, params = {}) => get(`/public/gallery/user/${userId}`, params),
 };

@@ -2,80 +2,35 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FiLoader } from 'react-icons/fi';
+import { publicApi } from '../services/api';
 
 const MemberDetailsPage = () => {
   const [members, setMembers] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  // Mock data for all members
-  const mockMembers = [
-    {
-      id: 1,
-      name: "John Doe",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80",
-      team: "Photography Team",
-      position: "Lead Photographer"
-    },
-    {
-      id: 2,
-      name: "Jane Smith",
-      image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&q=80",
-      team: "Editorial Team",
-      position: "Content Creator"
-    },
-    {
-      id: 3,
-      name: "Alex Johnson",
-      image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=80",
-      team: "Technical Team",
-      position: "Video Editor"
-    },
-    {
-      id: 4,
-      name: "Sarah Williams",
-      image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&q=80",
-      team: "Design Team",
-      position: "Graphic Designer"
-    },
-    {
-      id: 5,
-      name: "Michael Brown",
-      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&q=80",
-      team: "Photography Team",
-      position: "Senior Photographer"
-    },
-    {
-      id: 6,
-      name: "Emily Davis",
-      image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&q=80",
-      team: "Social Media Team",
-      position: "Social Media Manager"
-    },
-    {
-      id: 7,
-      name: "David Wilson",
-      image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&q=80",
-      team: "Photography Team",
-      position: "Portrait Specialist"
-    },
-    {
-      id: 8,
-      name: "Lisa Anderson",
-      image: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=400&q=80",
-      team: "Event Team",
-      position: "Event Coordinator"
-    }
-  ];
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Simulate API loading
-    setLoading(true);
-    
-    setTimeout(() => {
-      setMembers(mockMembers);
-      setLoading(false);
-    }, 500);
+    fetchMembers();
   }, []);
+
+  const fetchMembers = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const response = await publicApi.getAllMembers({ limit: 100 });
+      
+      if (response.data?.success && response.data?.data?.members) {
+        setMembers(response.data.data.members);
+      } else {
+        setError('Failed to load members');
+      }
+    } catch (err) {
+      console.error('Error fetching members:', err);
+      setError('Failed to load members. Please try again later.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   // Loading State
   if (loading) {
@@ -87,9 +42,35 @@ const MemberDetailsPage = () => {
     );
   }
 
+  // Error State
+  if (error) {
+    return (
+      <div className="bg-black text-white min-h-screen flex flex-col items-center justify-center p-8">
+        <div className="text-center">
+          <p className="text-xl text-red-500 mb-4">{error}</p>
+          <button
+            onClick={fetchMembers}
+            className="px-6 py-2 bg-sky-600 hover:bg-sky-500 text-white rounded-lg transition-colors"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // Empty State
+  if (members.length === 0) {
+    return (
+      <div className="bg-black text-white min-h-screen flex flex-col items-center justify-center p-8">
+        <p className="text-xl text-neutral-400">No members found</p>
+      </div>
+    );
+  }
+
   return (
     <div className="bg-black min-h-screen text-white">
-      <div className="container mx-auto pt-20 p-4 md:p-8 max-w-7xl">
+      <div className="container mx-auto pt-24 md:pt-32 p-4 md:p-8 max-w-7xl">
         {/* Page Header */}
         <motion.div
           className="text-center mb-12"
@@ -124,21 +105,31 @@ const MemberDetailsPage = () => {
               {/* Profile Photo */}
               <div className="flex justify-center mb-4">
                 <img
-                  src={member.image}
-                  alt={member.name}
+                  src={member.profilePhotoUrl || 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80'}
+                  alt={member.name || member.username}
                   className="w-32 h-32 rounded-full object-cover border-4 border-sky-500/20 shadow-lg shadow-sky-500/10"
+                  onError={(e) => {
+                    e.target.src = 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80';
+                  }}
                 />
               </div>
 
               {/* Name */}
               <h2 className="text-2xl font-bold text-center mb-2 tracking-tight">
-                {member.name}
+                {member.name || member.username}
               </h2>
 
               {/* Team & Position as simple text */}
               <div className="text-center mb-4 space-y-1">
-                <p className="text-zinc-400 text-sm">{member.position}</p>
-                <p className="text-zinc-500 text-xs">{member.team}</p>
+                {member.position && (
+                  <p className="text-zinc-400 text-sm">{member.position}</p>
+                )}
+                {member.team && (
+                  <p className="text-zinc-500 text-xs">{member.team}</p>
+                )}
+                {!member.position && !member.team && member.experienceLevel && (
+                  <p className="text-zinc-400 text-sm capitalize">{member.experienceLevel}</p>
+                )}
               </div>
 
               {/* View Portfolio Button */}
