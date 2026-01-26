@@ -1,12 +1,12 @@
 // src/components/admin/GalleryAdmin.jsx
 
 import React, { useState, useEffect } from 'react';
-import { FiLink, FiType, FiBookmark, FiFileText, FiEdit, FiTrash2, FiLoader } from 'react-icons/fi';
+import { FiLink, FiType, FiBookmark, FiFileText, FiEdit, FiTrash2, FiLoader, FiCalendar, FiUser } from 'react-icons/fi';
 
 import AdminCrudController from './AdminCrudController.jsx';
 import AdminInput from './AdminInput.jsx';
 import AdminTextArea from './AdminTextArea.jsx';
-import { galleryApi } from '../../services/api.js';
+import { galleryApi, eventsApi, usersApi } from '../../services/api.js';
 
 // Reusable Pagination Controls (can be moved to a shared file)
 const PaginationControls = ({ paginationInfo, onPageChange }) => {
@@ -38,7 +38,7 @@ const GalleryListItem = ({ item, onEdit, onDelete }) => (
     </div>
 );
 
-const GalleryForm = ({ currentItem, setCurrentItem }) => (
+const GalleryForm = ({ currentItem, setCurrentItem, events, users, loadingEvents, loadingUsers }) => (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <AdminInput id="g-title" label="Title" icon={<FiType />} value={currentItem.title} onChange={e => setCurrentItem({ ...currentItem, title: e.target.value })} />
         <AdminInput id="g-cat" label="Category" icon={<FiBookmark />} value={currentItem.category} onChange={e => setCurrentItem({ ...currentItem, category: e.target.value })} />
@@ -47,6 +47,26 @@ const GalleryForm = ({ currentItem, setCurrentItem }) => (
         </div>
         <div className="md:col-span-2">
             <AdminTextArea id="g-desc" label="Description" icon={<FiFileText />} value={currentItem.description} onChange={e => setCurrentItem({ ...currentItem, description: e.target.value })} />
+        </div>
+        <div>
+            <label htmlFor="g-event" className="block text-sm font-medium text-slate-400 mb-2">Associate with Event</label>
+            <div className="relative flex items-center">
+                <div className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500"><FiCalendar /></div>
+                <select id="g-event" value={currentItem.eventId || ''} onChange={e => setCurrentItem({ ...currentItem, eventId: e.target.value })} disabled={loadingEvents} className="w-full bg-slate-800 border border-slate-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500 py-2 pl-10 pr-4 appearance-none">
+                    <option value="">{loadingEvents ? 'Loading...' : 'None'}</option>
+                    {events.map(e => (<option key={e.id} value={e.id}>{e.title}</option>))}
+                </select>
+            </div>
+        </div>
+        <div>
+            <label htmlFor="g-user" className="block text-sm font-medium text-slate-400 mb-2">Uploaded By User</label>
+            <div className="relative flex items-center">
+                <div className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500"><FiUser /></div>
+                <select id="g-user" value={currentItem.userId || ''} onChange={e => setCurrentItem({ ...currentItem, userId: e.target.value })} disabled={loadingUsers} className="w-full bg-slate-800 border border-slate-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500 py-2 pl-10 pr-4 appearance-none">
+                    <option value="">{loadingUsers ? 'Loading...' : 'None'}</option>
+                    {users.map(u => (<option key={u.id} value={u.id}>{u.username}</option>))}
+                </select>
+            </div>
         </div>
     </div>
 );
@@ -58,6 +78,12 @@ const GalleryAdmin = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+
+    // State for dropdown data
+    const [events, setEvents] = useState([]);
+    const [users, setUsers] = useState([]);
+    const [loadingEvents, setLoadingEvents] = useState(true);
+    const [loadingUsers, setLoadingUsers] = useState(true);
 
     const fetchItems = async (page = 1) => {
         setLoading(true);
@@ -77,6 +103,22 @@ const GalleryAdmin = () => {
 
     useEffect(() => {
         fetchItems(1);
+        const fetchDataForDropdowns = async () => {
+            try {
+                const [eventsResponse, usersResponse] = await Promise.all([
+                    eventsApi.getAll(1, 1000),
+                    usersApi.getAll(1, 1000)
+                ]);
+                setEvents(eventsResponse.data.data || []);
+                setUsers(usersResponse.data.data.users || []);
+            } catch (error) {
+                console.error("Failed to fetch dropdown data:", error);
+            } finally {
+                setLoadingEvents(false);
+                setLoadingUsers(false);
+            }
+        };
+        fetchDataForDropdowns();
     }, []);
 
     const handlePageChange = (newPage) => {
@@ -90,13 +132,28 @@ const GalleryAdmin = () => {
         ...galleryApi,
         create: (data) => galleryApi.create({
             ...data,
-            image_url: data.imageUrl, // Map to image_url
+            image_url: data.imageUrl,
+            eventId: data.eventId && data.eventId !== '' ? parseInt(data.eventId) : null,
+            userId: data.userId && data.userId !== '' ? parseInt(data.userId) : null,
         }),
         update: (id, data) => galleryApi.update(id, {
             ...data,
-            image_url: data.imageUrl, // Map to image_url
+            image_url: data.imageUrl,
+            eventId: data.eventId && data.eventId !== '' ? parseInt(data.eventId) : null,
+            userId: data.userId && data.userId !== '' ? parseInt(data.userId) : null,
         })
     };
+
+    const CustomForm = (props) => (
+        <GalleryForm {...props} events={events} users={users} loadingEvents={loadingEvents} loadingUsers={loadingUsers} />
+    );
+
+    // Map API response to form state
+    const mapFromApiToForm = (item) => ({
+        ...item,
+        eventId: item.eventId || '',
+        userId: item.userId || '',
+    });
 
     if (loading && !items.length) return <div className="flex justify-center items-center h-40"><FiLoader className="animate-spin text-sky-500" size={40} /></div>;
     if (error) return <div className="bg-red-900/50 text-red-300 p-3 rounded-md">{error}</div>;
@@ -106,13 +163,14 @@ const GalleryAdmin = () => {
             <AdminCrudController
                 title="Gallery"
                 items={items}
-                FormComponent={GalleryForm}
+                FormComponent={CustomForm}
                 ListItemComponent={GalleryListItem}
                 // Use camelCase for the form's state
-                initialFormState={{ id: null, title: '', imageUrl: '', category: '', description: '' }}
+                initialFormState={{ id: null, title: '', imageUrl: '', category: '', description: '', eventId: '', userId: '' }}
                 // Use the remapped API object for create/update calls
                 api={apiWithRemapping}
                 onDataChange={() => fetchItems(currentPage)}
+                mapFromApi={mapFromApiToForm}
             />
             <PaginationControls paginationInfo={paginationInfo} onPageChange={handlePageChange} />
         </div>

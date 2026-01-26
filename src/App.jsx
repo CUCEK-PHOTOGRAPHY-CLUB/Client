@@ -34,7 +34,9 @@ const Teampage = lazy(() => import('./pages/Teampage.jsx'));
 const Alumni = lazy(() => import('./pages/Alumni.jsx'));
 const MemberPortfolio = lazy(() => import('./pages/MemberPortfolio.jsx'));
 const PhotoUploadPage = lazy(() => import('./pages/PhotoUploadPage.jsx'));
+const Uploader = lazy(() => import('./pages/Uploader.jsx'));
 const LoginPage = lazy(() => import('./pages/LoginPage.jsx'));
+const EventTemplate = lazy(() => import('./pages/EventTemplate.jsx'));
 const StorePage = lazy(() => import('./pages/StorePage.jsx'));
 const MyProfile = lazy(() => import('./pages/MyProfile.jsx'));
 const HalloweenEventPage = lazy(() => import('./pages/HalloweenEventPage.jsx'));
@@ -73,8 +75,9 @@ function App() {
                 />
                 <Route
                   path="/upload"
-                  element={<MemberProtectedRoute><PhotoUploadPage /></MemberProtectedRoute>}
-                />
+                  element={<MemberProtectedRoute><PhotoUploadPage /></MemberProtectedRoute>} />
+                <Route path="/event-upload" element={<ProtectedRoute><Uploader /></ProtectedRoute>} />
+
 
                 {/* --- Public Routes --- */}
                 <Route path="/" element={<Home />} />
@@ -92,6 +95,8 @@ function App() {
                 <Route path="/film-recreation" element={<FilmRecreationPage />} />
                 <Route path='/members/:id' element={<MemberPortfolio />} />
                 <Route path='/member-details' element={<MemberDetailsPage />} />
+                <Route path="/cpcevent/:eventId" element={<EventTemplate />} />
+
                 {/* Catch-all Not Found Route */}
                 <Route path="*" element={<NotFoundPage />} />
               </Routes>

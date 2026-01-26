@@ -60,3 +60,17 @@ body {
   background: linear-gradient(to bottom, rgba(255, 255, 255, 0.4), transparent);
   pointer-events: none;
 }
+
+/* Utility class to hide scrollbar while maintaining scroll functionality */
+.scrollbar-hide {
+  /* Firefox */
+  scrollbar-width: none;
+  
+  /* IE and Edge */
+  -ms-overflow-style: none;
+}
+
+/* WebKit browsers (Chrome, Safari, Opera) */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}

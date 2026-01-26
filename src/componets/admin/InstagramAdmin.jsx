@@ -1,11 +1,12 @@
 // src/components/admin/InstagramAdmin.jsx
 
 import React, { useState, useEffect } from 'react';
-import { FiInstagram, FiImage, FiEdit, FiTrash2, FiLink, FiLoader } from 'react-icons/fi';
+import { FiInstagram, FiImage, FiEdit, FiTrash2, FiLink, FiLoader, FiFileText } from 'react-icons/fi';
 import { instagramApi } from '../../services/api.js';
 
 import AdminCrudController from './AdminCrudController.jsx';
 import AdminInput from './AdminInput.jsx';
+import AdminTextArea from './AdminTextArea.jsx';
 
 // --- Instagram-Specific Components ---
 
@@ -20,7 +21,7 @@ const InstagramListItem = ({ item, onEdit, onDelete }) => (
                 />
             </a>
             <div className="flex-1 min-w-0">
-                <p className="font-bold text-white">Instagram Post</p>
+                <p className="font-bold text-white truncate">{item.caption || 'Instagram Post'}</p>
                 {item.postUrl && (
                     <a href={item.postUrl} target="_blank" rel="noopener noreferrer" className="text-sm text-slate-400 hover:text-sky-400 flex items-center gap-1.5 break-all">
                         <FiLink size={12}/> 
@@ -38,6 +39,14 @@ const InstagramListItem = ({ item, onEdit, onDelete }) => (
 
 const InstagramForm = ({ currentItem, setCurrentItem }) => (
     <div className="space-y-6">
+        <AdminTextArea
+            id="insta-caption"
+            label="Caption (Optional)"
+            icon={<FiFileText />}
+            value={currentItem.caption || ''}
+            onChange={e => setCurrentItem({ ...currentItem, caption: e.target.value })}
+            placeholder="Add a caption for this Instagram post..."
+        />
         <AdminInput
             id="insta-link"
             label="Instagram Post URL"
@@ -85,7 +94,7 @@ const InstagramAdmin = () => {
     }, []);
 
     if (loading && !items.length) return <div className="flex justify-center items-center h-40"><FiLoader className="animate-spin text-sky-500" size={40} /></div>;
-    if (error) return <div className="p-4 bg-red-900/50 text-red-300 rounded-md">{error}</div>;
+    if (error) return <div className="p-4 bg-red-900/50 text-red-30, caption: ''0 rounded-md">{error}</div>;
 
     return (
         <AdminCrudController

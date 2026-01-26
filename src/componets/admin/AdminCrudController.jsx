@@ -113,18 +113,17 @@ const AdminCrudController = ({
     <div className="bg-slate-900/50 p-6 md:p-8 rounded-xl border border-slate-700/50">
        <div className="flex justify-between items-center mb-6">
         <h3 className="text-xl font-bold">{title}</h3>
-        {/* Hide "Add New" button when form is visible for a cleaner UI */}
-        {!isFormVisible && (
-            <button
-                onClick={handleAddNew}
-                className="bg-sky-600 hover:bg-sky-500 text-white font-semibold py-2 px-4 rounded-lg transition-colors flex items-center gap-2"
-            >
-                <FiPlus /> Add New
-            </button>
-        )}
+        <button
+            onClick={handleAddNew}
+            className="bg-sky-600 hover:bg-sky-500 text-white font-semibold py-2 px-4 rounded-lg transition-colors flex items-center gap-2"
+        >
+            <FiPlus /> Add New
+        </button>
       </div>
+      
+      {/* Show "Add New" form at top when adding (not editing) */}
       <AnimatePresence onExitComplete={handleAnimationComplete}>
-        {isFormVisible && (
+        {isFormVisible && !isEditing && (
           <motion.div
             variants={formVariants}
             initial="hidden"
@@ -134,7 +133,7 @@ const AdminCrudController = ({
             className="mb-8 p-6 bg-slate-800/80 rounded-lg relative border border-slate-700"
           >
             <div className="flex justify-between items-center mb-4">
-              <h4 className="font-semibold text-lg">{isEditing ? `Edit Item` : `Add New Item`}</h4>
+              <h4 className="font-semibold text-lg">Add New Item</h4>
               <button onClick={handleCloseForm} className="text-slate-500 hover:text-white"><FiX /></button>
             </div>
             {error && (
@@ -158,24 +157,69 @@ const AdminCrudController = ({
                         disabled={isLoading}
                         className="px-5 py-2 bg-green-600 rounded-md font-semibold hover:bg-green-500 transition-colors disabled:opacity-50"
                     >
-                        {isLoading ? 'Saving...' : (isEditing ? 'Update Changes' : 'Save New Item')}
+                        {isLoading ? 'Saving...' : 'Save New Item'}
                     </button>
                 </div>
             </form>
           </motion.div>
         )}
       </AnimatePresence>
+      
       <div className="space-y-4">
         {items.length > 0 ? (
           items.map(item => (
-            <ListItemComponent 
-                key={item.id} 
-                item={item} 
-                onEdit={handleEdit} 
-                onDelete={handleDelete} 
-                // Pass down all other props (e.g., onToggleStatus, onRoleChange)
-                {...rest}
-            />
+            <React.Fragment key={item.id}>
+              <ListItemComponent 
+                  item={item} 
+                  onEdit={handleEdit} 
+                  onDelete={handleDelete} 
+                  {...rest}
+              />
+              
+              {/* Show edit form directly below the item being edited */}
+              <AnimatePresence>
+                {isFormVisible && isEditing && currentItem.id === item.id && (
+                  <motion.div
+                    variants={formVariants}
+                    initial="hidden"
+                    animate="visible"
+                    exit="exit"
+                    transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+                    className="p-6 bg-slate-800/80 rounded-lg relative border border-slate-700 ml-4"
+                  >
+                    <div className="flex justify-between items-center mb-4">
+                      <h4 className="font-semibold text-lg">Edit Item</h4>
+                      <button onClick={handleCloseForm} className="text-slate-500 hover:text-white"><FiX /></button>
+                    </div>
+                    {error && (
+                      <div className="bg-red-900/50 border border-red-500 text-red-300 p-3 rounded-md mb-4 text-sm whitespace-pre-line">
+                        {error}
+                      </div>
+                    )}
+                    
+                    <form onSubmit={handleSubmit}>
+                        <FormComponent 
+                            currentItem={currentItem} 
+                            setCurrentItem={setCurrentItem} 
+                            isEditing={isEditing} 
+                        />
+                        <div className="flex justify-end gap-4 mt-6">
+                            <button type="button" onClick={handleCloseForm} className="px-5 py-2 bg-slate-600 rounded-md hover:bg-slate-500 transition-colors">
+                                Cancel
+                            </button>
+                            <button
+                                type="submit"
+                                disabled={isLoading}
+                                className="px-5 py-2 bg-green-600 rounded-md font-semibold hover:bg-green-500 transition-colors disabled:opacity-50"
+                            >
+                                {isLoading ? 'Saving...' : 'Update Changes'}
+                            </button>
+                        </div>
+                    </form>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </React.Fragment>
           ))
         ) : (
           <p className="text-slate-500 text-center py-4">No items yet. Click "Add New" to get started.</p>

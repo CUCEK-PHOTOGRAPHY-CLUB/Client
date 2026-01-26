@@ -13,10 +13,12 @@ import InstagramAdmin from '../componets/admin/InstagramAdmin.jsx';
 import UserManagementAdmin from '../componets/admin/UserManagementAdmin.jsx';
 import VideoAdmin from '../componets/admin/VideoAdmin.jsx';
 import JoiningRequestsAdmin from '../componets/admin/JoiningRequestsAdmin.jsx';
+import Uploader from './Uploader.jsx'; // Import the Uploader component
 import MemberManagementAdmin from '../componets/admin/MemberManagementAdmin.jsx';
 
 // Import layout components with corrected paths
-import AdminSidebar, { SIDEBAR_ITEMS } from '../layout/AdminSidebar.jsx';
+import AdminSidebar from '../layout/AdminSidebar.jsx';
+import { SIDEBAR_ITEMS } from '../data/sidebarItems.jsx';
 import AdminHeader from '../layout/AdminHeader.jsx';
 
 // --- A "Router" component to select which admin panel to show ---
@@ -33,6 +35,7 @@ const ContentPanel = ({ activeTab }) => {
         case 'users': return <UserManagementAdmin />;
         case 'videos': return <VideoAdmin />;
         case 'joining-requests': return <JoiningRequestsAdmin />;
+        case 'event-upload': return <Uploader />;
         case 'member-management': return <MemberManagementAdmin />;
         default: return (
             <div className="flex items-center justify-center h-64">
@@ -57,8 +60,8 @@ const AdminPage = () => {
     const currentTabLabel = SIDEBAR_ITEMS.find(item => item.id === activeTab)?.label || 'Dashboard';
 
     return (
-        <div className="w-full min-h-screen bg-slate-900 text-slate-100 font-sans">
-            <div className="flex h-screen">
+        <div className="w-full min-h-screen bg-slate-900 text-slate-100 font-sans overflow-hidden">
+            <div className="flex h-screen overflow-hidden">
                 <AdminSidebar
                     activeTab={activeTab}
                     setActiveTab={setActiveTab}

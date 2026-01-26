@@ -7,8 +7,7 @@ import Event from "../componets/home/Event"
 import Team from "../componets/home/Team"
 import AboutSection from "../componets/home/About"
 import SocialFeed from "../componets/home/SocialFeed"
-import OnamBanner from "../componets/banners/OnamBanner"
-import EventTeaser from "../componets/EventTeaser"
+
 
 
 function Home() {
@@ -19,11 +18,10 @@ function Home() {
           <Hero />
           <div id="work" className="min-h-screen text-center relative">
             <AboutSection />
-              {/* 2. Add the Halloween Contest section here */}
-            <EventTeaser />
+            {/* Events Section - Featured prominently */}
+            <Event />
             {/* <OnamBanner /> */}
             <Gallery />
-            <Event />
             <Team />
             <Testimonials />
             <SocialFeed />
