@@ -4,7 +4,7 @@ import { useAuth } from '../context/AuthContext.jsx'; // Make sure path is corre
 import {
     FiImage, FiCalendar, FiUsers, FiMessageSquare,
     FiInstagram, FiStar, FiLogOut, FiGrid, FiFilm,
-    FiUserPlus
+    FiUserPlus, FiUserCheck
 } from 'react-icons/fi';
 
 // --- Centralized Configuration for Sidebar ---
@@ -20,6 +20,7 @@ export const SIDEBAR_ITEMS = [
     { id: 'videos', label: 'Videos', icon: <FiFilm size={20} /> },
     { id: 'joining-requests', label: 'Joining Requests', icon: <FiUserPlus size={20} /> },
     { id: 'event-upload', label: 'Event Upload', icon: <FiCalendar size={20} /> },
+    { id: 'member-management', label: 'Member Management', icon: <FiUserCheck size={20} /> },
 ];
 
 const TabButton = ({ id, label, icon, activeTab, onClick }) => (

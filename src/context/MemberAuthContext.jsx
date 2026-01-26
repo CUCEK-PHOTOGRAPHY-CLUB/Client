@@ -37,14 +37,16 @@ export const MemberAuthProvider = ({ children }) => {
     const memberLogin = async (credentials) => {
         const response = await authApi.memberLogin(credentials);
         const newToken = response.data.data.token;
-        
+
         // Persist the token
         setToken(newToken);
         localStorage.setItem('memberToken', newToken);
 
         // Fetch the logged-in member's profile
         const userProfile = await authApi.getMe();
-        setMember(userProfile.data.data);
+        const userData = userProfile.data.data;
+        setMember(userData);
+        return userData;
     };
 
     const memberLogout = async () => {

@@ -14,6 +14,7 @@ import UserManagementAdmin from '../componets/admin/UserManagementAdmin.jsx';
 import VideoAdmin from '../componets/admin/VideoAdmin.jsx';
 import JoiningRequestsAdmin from '../componets/admin/JoiningRequestsAdmin.jsx';
 import Uploader from './Uploader.jsx'; // Import the Uploader component
+import MemberManagementAdmin from '../componets/admin/MemberManagementAdmin.jsx';
 
 // Import layout components with corrected paths
 import AdminSidebar, { SIDEBAR_ITEMS } from '../layout/AdminSidebar.jsx';
@@ -35,6 +36,7 @@ const ContentPanel = ({ activeTab }) => {
         case 'videos': return <VideoAdmin />;
         case 'joining-requests': return <JoiningRequestsAdmin />;
         case 'event-upload': return <Uploader />;
+        case 'member-management': return <MemberManagementAdmin />;
         default: return (
             <div className="flex items-center justify-center h-64">
                 <div className="text-center text-slate-500">Select a category from the sidebar to begin.</div>

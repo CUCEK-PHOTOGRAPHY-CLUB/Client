@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiCheck, FiX, FiMail, FiAward, FiUser, FiLoader, FiMessageSquare } from 'react-icons/fi';
+import emailjs from '@emailjs/browser';
 import { memberApplicationsApi } from '../../services/api.js';
 
 // Modal for Approve/Reject actions (No changes needed here)
@@ -56,7 +57,7 @@ const JoiningRequestsAdmin = () => {
             const response = await memberApplicationsApi.getPending();
             // highlight-start
             // --- FIX 1: Point to the correct array inside the response data ---
-            setRequests(response.data.data.applications); 
+            setRequests(response.data.data.applications);
             // highlight-end
         } catch (err) {
             setError('Failed to fetch joining requests.');
@@ -73,20 +74,46 @@ const JoiningRequestsAdmin = () => {
         e.preventDefault();
         const { request, action } = modalInfo;
         const adminNotes = e.target.adminNotes.value.trim() || null;
-        
+
         setIsSubmitting(true);
         try {
-            // highlight-start
-            // --- FIX 2: Use `req_id` for the API calls, not `id` ---
             if (action === 'approve') {
-                await memberApplicationsApi.approve(request.req_id, adminNotes);
+                const response = await memberApplicationsApi.approve(request.req_id, adminNotes);
+
+                // --- EmailJS: Send Approval Email (Frontend) ---
+                const generatedPassword = response.data.data.password;
+
+                if (generatedPassword) {
+                    try {
+                        await emailjs.send(
+                            'service_d7cg6kh', // Service ID
+                            'template_1ir9ikp', // Approval Template ID (Swapped)
+                            {
+                                to_name: request.name,
+                                to_email: request.email,
+                                password: generatedPassword,
+                                login_link: window.location.origin + '/auth' // Dynamic link
+                            },
+                            'aZVQJExOaotV0PhEh' // Public Key
+                        );
+                        console.log('✅ Approval email sent via EmailJS');
+                    } catch (emailErr) {
+                        console.error('❌ Failed to send approval email via EmailJS', emailErr);
+                        alert('Application approved, BUT email failed to send. Please verify EmailJS quota.');
+                    }
+                } else {
+                    console.log('User already exists, no new password sent.');
+                }
+
             } else if (action === 'reject') {
                 await memberApplicationsApi.reject(request.req_id, adminNotes);
+                // Note: Rejection email template not requested/setup yet per user instructions.
             }
-            // highlight-end
+
             setModalInfo({ isOpen: false, request: null, action: '' });
             fetchRequests(); // Refresh the list
         } catch (err) {
+            console.error(err);
             alert(`Failed to ${action} application. Please try again.`);
         } finally {
             setIsSubmitting(false);
@@ -120,7 +147,7 @@ const JoiningRequestsAdmin = () => {
                 ))
             ) : (
                 <div className="text-center py-16 px-6 bg-slate-800/30 rounded-lg border-2 border-dashed border-slate-700">
-                    <div className="inline-block p-4 bg-green-500/10 rounded-full"><FiCheck size={32} className="text-green-400"/></div>
+                    <div className="inline-block p-4 bg-green-500/10 rounded-full"><FiCheck size={32} className="text-green-400" /></div>
                     <h3 className="mt-4 text-xl font-semibold text-white">All Caught Up!</h3>
                     <p className="text-slate-400 mt-2">There are no new pending joining requests.</p>
                 </div>

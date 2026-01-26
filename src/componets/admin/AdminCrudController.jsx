@@ -73,8 +73,18 @@ const AdminCrudController = ({
       onDataChange();
       handleCloseForm();
     } catch (err) {
-      const errorMessage = err.response?.data?.message || 'An unknown error occurred.';
-      setError(`Failed to save: ${errorMessage}`);
+      const errorData = err.response?.data;
+      let errorMessage = errorData?.message || 'An unknown error occurred.';
+      
+      // If there are detailed validation errors, display them
+      if (errorData?.errors && Array.isArray(errorData.errors) && errorData.errors.length > 0) {
+        const detailedErrors = errorData.errors.map(error => 
+          `${error.field}: ${error.message}`
+        ).join('\n');
+        errorMessage = `${errorMessage}\n\n${detailedErrors}`;
+      }
+      
+      setError(errorMessage);
     } finally {
       setIsLoading(false);
     }
@@ -127,7 +137,11 @@ const AdminCrudController = ({
               <h4 className="font-semibold text-lg">{isEditing ? `Edit Item` : `Add New Item`}</h4>
               <button onClick={handleCloseForm} className="text-slate-500 hover:text-white"><FiX /></button>
             </div>
-            {error && <div className="bg-red-900/50 border border-red-500 text-red-300 p-3 rounded-md mb-4 text-sm">{error}</div>}
+            {error && (
+              <div className="bg-red-900/50 border border-red-500 text-red-300 p-3 rounded-md mb-4 text-sm whitespace-pre-line">
+                {error}
+              </div>
+            )}
             
             <form onSubmit={handleSubmit}>
                 <FormComponent 

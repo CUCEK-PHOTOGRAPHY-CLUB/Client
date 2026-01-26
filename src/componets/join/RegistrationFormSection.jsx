@@ -1,16 +1,17 @@
-// src/components/join/RegistrationFormSection.js
 import React, { useState } from 'react';
-import { FiUser, FiMail, FiAward, FiMessageSquare } from 'react-icons/fi';
-import { memberApi } from '../../services/api'; // Assuming your api.js is in a services folder
-import AnimatedInput from './AnimatedInput.jsx'; // Assuming you have this component
+import { FiUser, FiMail, FiAward, FiMessageSquare, FiLock } from 'react-icons/fi';
+import emailjs from '@emailjs/browser';
+import { memberApi } from '../../services/api';
+import AnimatedInput from './AnimatedInput.jsx';
 
 const RegistrationFormSection = () => {
-  // State to manage form inputs
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    program: '',
-    description: '', // Added field required by the API
+    prog_year: '',
+    description: '',
+    username: '',
+    password: '',
   });
 
   // State to manage the submission process
@@ -26,9 +27,9 @@ const RegistrationFormSection = () => {
   // Handler for form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     // Basic validation
-    if (!formData.name || !formData.email || !formData.program || !formData.description) {
+    if (!formData.name || !formData.username || !formData.email || !formData.password || !formData.prog_year || !formData.description) {
       setFeedback({ message: 'All fields are required.', type: 'error' });
       return;
     }
@@ -40,19 +41,41 @@ const RegistrationFormSection = () => {
       // Prepare the payload for the API, mapping form fields to API fields
       const apiPayload = {
         name: formData.name,
+        username: formData.username,
         email: formData.email,
-        password: 'temp_password_123',
-        prog_year: formData.program, // Map 'program' to 'prog_year'
+        prog_year: formData.prog_year,
         description: formData.description,
+        password: formData.password,
       };
 
       const response = await memberApi.submitApplication(apiPayload);
-      
+
+      // --- Send Confirmation Email (Frontend) ---
+      try {
+        await emailjs.send(
+          'service_d7cg6kh', // Service ID
+          'template_gfx6ckf', // Admin Notification Template ID
+          {
+            to_name: 'Admin', // Addressed to Admin
+            login_link: window.location.origin + '/auth', // Dynamic link
+            to_email: 'cucekphotographyclub@gmail.com', // Send to Admin ONLY
+            from_name: formData.name, // The applicant name
+            from_email: formData.email,
+            prog_year: formData.prog_year,
+            message: formData.description,
+          },
+          'aZVQJExOaotV0PhEh' // Public Key
+        );
+        console.log('Confirmation email sent!');
+      } catch (emailErr) {
+        console.error('Failed to send confirmation email', emailErr);
+      }
+
       // Handle success
-      setFeedback({ message: response.data.message || 'Application submitted successfully! You will receive login credentials via email once approved by admin.', type: 'success' });
+      setFeedback({ message: response.data.message || 'Application submitted successfully! You will be notified once reviewed. ', type: 'success' });
       setFormStatus('success');
       // Reset form after successful submission
-      setFormData({ name: '', email: '', program: '', description: '' });
+      setFormData({ name: '', username: '', email: '', password: '', prog_year: '', description: '' });
 
     } catch (error) {
       // Handle errors from the API
@@ -66,7 +89,7 @@ const RegistrationFormSection = () => {
     <section>
       <div className="max-w-lg mx-auto bg-neutral-900/50 p-8 md:p-12 rounded-xl border border-white/10">
         <h2 className="text-2xl font-bold text-center mb-6">Join The Club</h2>
-        
+
         {/* Feedback message display */}
         {feedback.message && (
           <div className={`p-4 mb-6 text-center rounded-lg ${feedback.type === 'error' ? 'bg-red-900/50 text-red-300' : 'bg-green-900/50 text-green-300'}`}>
@@ -76,17 +99,19 @@ const RegistrationFormSection = () => {
 
         <form onSubmit={handleSubmit} className="w-full flex flex-col gap-8">
           <AnimatedInput id="name" label="Your Name" icon={<FiUser />} value={formData.name} onChange={handleInputChange} />
+          <AnimatedInput id="username" label="Your Username" icon={<FiUser />} value={formData.username} onChange={handleInputChange} />
           <AnimatedInput id="email" label="Email Address" type="email" icon={<FiMail />} value={formData.email} onChange={handleInputChange} />
-          <AnimatedInput id="program" label="Passout Year" icon={<FiAward />} value={formData.program} onChange={handleInputChange} />
-          
+          <AnimatedInput id="password" label="Your Password" type="password" icon={<FiLock />} value={formData.password} onChange={handleInputChange} />
+          <AnimatedInput id="prog_year" label="Passout Year" icon={<FiAward />} value={formData.prog_year} onChange={handleInputChange} />
+
           {/* New field for description */}
-          <AnimatedInput 
-            id="description" 
-            label="Why do you want to join?" 
-            as="textarea" // Use textarea for multiline input
-            icon={<FiMessageSquare />} 
-            value={formData.description} 
-            onChange={handleInputChange} 
+          <AnimatedInput
+            id="description"
+            label="Why do you want to join?"
+            as="textarea"
+            icon={<FiMessageSquare />}
+            value={formData.description}
+            onChange={handleInputChange}
           />
 
           <button
