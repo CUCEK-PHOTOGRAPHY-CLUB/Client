@@ -6,6 +6,7 @@ const navLinks = [
   { title: 'Home', href: '/' },
   { title: 'About', href: '/about' },
   { title: 'Works', href: '/gallery' },
+  { title: 'Members', href: '/member-details' },
   { title: 'Join', href: '/join' },
   { title: 'Film Scene Recreation', href: '/film-recreation' },
   { title: 'Videos', href: '/videos' },
