@@ -48,11 +48,15 @@ const HeroLoadingSkeleton = () => (
     </div>
 
     {/* Text and Controls Skeleton */}
-    <div className="relative z-20 max-w-5xl w-full text-center px-4 animate-pulse">
-      {/* Title Placeholder */}
-      <div className="h-10 md:h-16 w-3/4 max-w-2xl bg-white/10 rounded-lg mx-auto" />
-      {/* Subtitle Placeholder */}
-      <div className="mt-6 h-6 md:h-8 w-full max-w-xl bg-white/10 rounded-lg mx-auto" />
+    <div className="relative z-20 max-w-5xl w-full text-center px-4">
+      {/* Static SEO Content */}
+      <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tighter text-white" style={{ textShadow: '0px 4px 12px rgba(0, 0, 0, 0.5)' }}>
+        CUCEK Photography Club
+      </h1>
+      <p className="mt-6 text-lg md:text-xl max-w-2xl mx-auto text-gray-200" style={{ textShadow: '0px 2px 8px rgba(0, 0, 0, 0.5)' }}>
+        Official photography club of Cochin University College of Engineering Kuttanad.
+        We document college events, student creativity, and campus life through photography.
+      </p>
     </div>
 
     {/* Bottom Controls Placeholder */}
@@ -203,14 +207,15 @@ const Hero = () => {
             style={{ textShadow: '0px 4px 12px rgba(0, 0, 0, 0.5)' }}
             variants={textVariants}
           >
-            {currentImage.title}
+            CUCEK Photography Club
           </motion.h1>
           <motion.p
             className="mt-6 text-lg md:text-xl max-w-2xl mx-auto text-gray-200"
             style={{ textShadow: '0px 2px 8px rgba(0, 0, 0, 0.5)' }}
             variants={textVariants}
           >
-            {currentImage.subtitle}
+            Official photography club of Cochin University College of Engineering Kuttanad.
+            We document college events, student creativity, and campus life through photography.
           </motion.p>
         </motion.div>
       </div>
