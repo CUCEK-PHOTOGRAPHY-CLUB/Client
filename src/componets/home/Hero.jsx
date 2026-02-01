@@ -41,22 +41,21 @@ const getOptimizedImageUrl = (url, width = 1920) => {
 // --- Professional Loading Skeleton Component ---
 const HeroLoadingSkeleton = () => (
   <section className="relative h-screen w-full flex items-center justify-center text-white overflow-hidden bg-black">
-    {/* Background Skeleton with Shimmer Effect */}
-    <div className="absolute inset-0 bg-neutral-900 overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-br from-neutral-800/50 via-neutral-900/50 to-black/50" />
-      <div className="absolute top-0 left-[-150%] h-full w-[150%] animate-[shimmer_2s_infinite] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+    {/* Placeholder Background Image */}
+    <div className="absolute inset-0">
+      <img
+        src="https://i.postimg.cc/bwK1XgmM/IMG-6488.jpg"
+        alt="Loading..."
+        className="w-full h-full object-cover"
+      />
+      <div className="absolute inset-0 bg-black/60" />
     </div>
 
     {/* Text and Controls Skeleton */}
     <div className="relative z-20 max-w-5xl w-full text-center px-4">
-      {/* Static SEO Content */}
-      <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tighter text-white" style={{ textShadow: '0px 4px 12px rgba(0, 0, 0, 0.5)' }}>
-        CUCEK Photography Club
-      </h1>
-      <p className="mt-6 text-lg md:text-xl max-w-2xl mx-auto text-gray-200" style={{ textShadow: '0px 2px 8px rgba(0, 0, 0, 0.5)' }}>
-        Official photography club of Cochin University College of Engineering Kuttanad.
-        We document college events, student creativity, and campus life through photography.
-      </p>
+      {/* Visual Placeholder only - SEO handled by Home.jsx */}
+      <div className="h-10 md:h-16 w-3/4 max-w-2xl bg-white/10 rounded-lg mx-auto backdrop-blur-sm" />
+      <div className="mt-6 h-6 md:h-8 w-full max-w-xl bg-white/10 rounded-lg mx-auto backdrop-blur-sm" />
     </div>
 
     {/* Bottom Controls Placeholder */}
@@ -202,20 +201,19 @@ const Hero = () => {
       </AnimatePresence>
       <div className="relative z-20 max-w-5xl text-center px-4">
         <motion.div key={imageIndex} variants={textVariants} initial="initial" animate="animate">
-          <motion.h1
+          <motion.h2
             className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tighter text-white"
             style={{ textShadow: '0px 4px 12px rgba(0, 0, 0, 0.5)' }}
             variants={textVariants}
           >
-            CUCEK Photography Club
-          </motion.h1>
+            {currentImage.title}
+          </motion.h2>
           <motion.p
             className="mt-6 text-lg md:text-xl max-w-2xl mx-auto text-gray-200"
             style={{ textShadow: '0px 2px 8px rgba(0, 0, 0, 0.5)' }}
             variants={textVariants}
           >
-            Official photography club of Cochin University College of Engineering Kuttanad.
-            We document college events, student creativity, and campus life through photography.
+            {currentImage.subtitle}
           </motion.p>
         </motion.div>
       </div>
