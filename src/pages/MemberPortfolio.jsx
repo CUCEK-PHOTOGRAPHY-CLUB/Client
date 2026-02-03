@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { publicApi } from '../services/api.js'; // Import real API
+import { publicApi } from '../services/api.js';
 import PortfolioHeader from '../componets/members/PortfolioHeader.jsx';
 import PortfolioGallery from '../componets/members/PortfolioGallery.jsx';
 import ImageModal from '../componets/members/ImageModal.jsx';
@@ -38,12 +38,15 @@ const MemberPortfolio = () => {
         // Map backend data to UI expectations
         const mappedMember = {
           id: profileData.id,
-          name: profileData.name || profileData.username,
+          name: profileData.name,
           role: profileData.role === 'admin' ? 'Club Administrator' : 'Club Member',
           experienceLevel: profileData.experienceLevel, // Pass experience level
           image: profileData.profilePhotoUrl || "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&q=80",
-          quote: profileData.bio || "Capturing moments that tell a story.",
+          bio: profileData.bio || "Capturing moments that tell a story.",
+          location: profileData.location,
           socialLinks: profileData.socialLinks,
+          skills: profileData.skills || [],
+          interests: profileData.interests || [],
           websiteUrl: profileData.websiteUrl,
           gallery: galleryRes.data.data.items.map(item => ({
             id: item.id,
