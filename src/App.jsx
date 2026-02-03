@@ -10,6 +10,7 @@ import { Analytics } from "@vercel/analytics/react"
 import Nav from './componets/Navbar.jsx';
 import Footer from './componets/Footer.jsx';
 import LoadingPage from './pages/LoadingPage.jsx';
+import Home from './pages/Home.jsx';
 
 // Contexts and Protected Route Components
 import { AuthProvider } from './context/AuthContext.jsx';
@@ -19,7 +20,7 @@ import MemberProtectedRoute from './componets/members/MemberProtectedRoute.jsx';
 
 // --- ALL LAZILY LOADED PAGES ---
 // This entire block was missing from the previous snippet, causing the error.
-const Home = lazy(() => import('./pages/Home.jsx'));
+// Home is now imported synchronously for better SEO
 const AboutPage = lazy(() => import('./pages/About.jsx'));
 const GalleryPage = lazy(() => import('./pages/GalleryPage.jsx'));
 const JoinPage = lazy(() => import('./pages/JoinPage.jsx'));

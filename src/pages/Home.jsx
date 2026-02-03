@@ -17,6 +17,7 @@ function Home() {
         <div className="bg-stone-900 text-white font-sans relative">
           <Hero />
           <div id="work" className="min-h-screen text-center relative">
+            {/* SEO: Permanent About Text for Indexing - Styled to match theme */}
             <AboutSection />
             {/* Events Section - Featured prominently */}
             <Event />
