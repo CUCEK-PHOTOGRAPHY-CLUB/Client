@@ -13,7 +13,6 @@ import InstagramAdmin from '../componets/admin/InstagramAdmin.jsx';
 import UserManagementAdmin from '../componets/admin/UserManagementAdmin.jsx';
 import VideoAdmin from '../componets/admin/VideoAdmin.jsx';
 import JoiningRequestsAdmin from '../componets/admin/JoiningRequestsAdmin.jsx';
-import Uploader from './Uploader.jsx'; // Import the Uploader component
 import MemberManagementAdmin from '../componets/admin/MemberManagementAdmin.jsx';
 
 // Import layout components with corrected paths
@@ -35,7 +34,6 @@ const ContentPanel = ({ activeTab }) => {
         case 'users': return <UserManagementAdmin />;
         case 'videos': return <VideoAdmin />;
         case 'joining-requests': return <JoiningRequestsAdmin />;
-        case 'event-upload': return <Uploader />;
         case 'member-management': return <MemberManagementAdmin />;
         default: return (
             <div className="flex items-center justify-center h-64">
