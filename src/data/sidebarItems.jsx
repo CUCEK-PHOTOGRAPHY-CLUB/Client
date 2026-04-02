@@ -15,6 +15,5 @@ export const SIDEBAR_ITEMS = [
     { id: 'users', label: 'Admin Management', icon: <FiUsers size={20} /> },
     { id: 'videos', label: 'Videos', icon: <FiFilm size={20} /> },
     { id: 'joining-requests', label: 'Joining Requests', icon: <FiUserPlus size={20} /> },
-    { id: 'event-upload', label: 'Event Upload', icon: <FiCalendar size={20} /> },
     { id: 'member-management', label: 'Member Management', icon: <FiUserCheck size={20} /> },
 ];
