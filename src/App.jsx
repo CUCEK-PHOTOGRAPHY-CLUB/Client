@@ -35,7 +35,6 @@ const Teampage = lazy(() => import('./pages/Teampage.jsx'));
 const Alumni = lazy(() => import('./pages/Alumni.jsx'));
 const MemberPortfolio = lazy(() => import('./pages/MemberPortfolio.jsx'));
 const PhotoUploadPage = lazy(() => import('./pages/PhotoUploadPage.jsx'));
-const Uploader = lazy(() => import('./pages/Uploader.jsx'));
 const LoginPage = lazy(() => import('./pages/LoginPage.jsx'));
 const EventTemplate = lazy(() => import('./pages/EventTemplate.jsx'));
 const StorePage = lazy(() => import('./pages/StorePage.jsx'));
@@ -78,7 +77,8 @@ function App() {
                 <Route
                   path="/upload"
                   element={<MemberProtectedRoute><PhotoUploadPage /></MemberProtectedRoute>} />
-                <Route path="/event-upload" element={<ProtectedRoute><Uploader /></ProtectedRoute>} />
+
+
 
 
                 {/* --- Public Routes --- */}
