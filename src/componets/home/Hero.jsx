@@ -201,13 +201,13 @@ const Hero = () => {
       </AnimatePresence>
       <div className="relative z-20 max-w-5xl text-center px-4">
         <motion.div key={imageIndex} variants={textVariants} initial="initial" animate="animate">
-          <motion.h2
+          <motion.h1
             className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tighter text-white"
             style={{ textShadow: '0px 4px 12px rgba(0, 0, 0, 0.5)' }}
             variants={textVariants}
           >
             {currentImage.title}
-          </motion.h2>
+          </motion.h1>
           <motion.p
             className="mt-6 text-lg md:text-xl max-w-2xl mx-auto text-gray-200"
             style={{ textShadow: '0px 2px 8px rgba(0, 0, 0, 0.5)' }}

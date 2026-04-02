@@ -43,6 +43,7 @@ const MyProfile = lazy(() => import('./pages/MyProfile.jsx'));
 const HalloweenEventPage = lazy(() => import('./pages/HalloweenEventPage.jsx'));
 const FilmRecreationPage = lazy(() => import('./pages/FilmRecreationPage.jsx'));
 const MemberDetailsPage = lazy(() => import('./pages/MemberDetailsPage.jsx'));
+const SattvaGallery = lazy(() => import('./pages/SattvaGallery.jsx'));
 
 function App() {
   const location = useLocation();
@@ -97,6 +98,8 @@ function App() {
                 <Route path='/members/:id' element={<MemberPortfolio />} />
                 <Route path='/member-details' element={<MemberDetailsPage />} />
                 <Route path="/cpcevent/:eventId" element={<EventTemplate />} />
+                <Route path="/sattva" element={<SattvaGallery />} />
+
 
                 {/* Catch-all Not Found Route */}
                 <Route path="*" element={<NotFoundPage />} />

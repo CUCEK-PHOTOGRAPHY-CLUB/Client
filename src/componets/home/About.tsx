@@ -71,9 +71,9 @@ const AboutSection = () => {
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.8, ease: 'easeOut' }}
           >
-            <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-white">
-              CUCEK Photography Club
-            </h1>
+            <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-white">
+              About CUCEK Photography Club
+            </h2>
 
             <p className="mt-6 text-lg text-gray-300 leading-relaxed">
               We are the official photography club of Cochin University College of Engineering Kuttanad.
