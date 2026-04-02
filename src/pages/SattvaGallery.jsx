@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { ExternalLink, Sparkles } from 'lucide-react';
+import { FiExternalLink } from 'react-icons/fi';
+import { SparklesIcon } from '@heroicons/react/24/outline';
 
 const imgSymphony = "https://images.unsplash.com/photo-1619983081563-430f63602796?q=80&w=1000&auto=format&fit=crop";
 const imgRhythm = "https://images.unsplash.com/photo-1547153760-18fc86324498?q=80&w=1000&auto=format&fit=crop";
@@ -117,7 +118,7 @@ const SattvaGallery = () => {
                                     </h2>
 
                                     <div className="mt-6 flex items-center text-sm font-semibold tracking-wide text-white/50 group-hover:text-white transition-colors duration-300">
-                                        Open Drive <ExternalLink className="w-4 h-4 ml-2" />
+                                        Open Drive <FiExternalLink className="w-4 h-4 ml-2" />
                                     </div>
                                 </div>
                             </motion.div>
@@ -142,7 +143,7 @@ const SattvaGallery = () => {
                     onMouseLeave={() => setIsHovering(false)}
                     className="flex items-center gap-3 px-8 py-4 bg-white/10 backdrop-blur-md border border-white/20 text-white rounded-full font-bold tracking-wide hover:bg-white hover:text-black transition-all duration-300"
                 >
-                    <Sparkles className="w-5 h-5" />
+                    <SparklesIcon className="w-5 h-5" />
                     ACCESS MASTER DRIVE
                 </a>
             </motion.div>
